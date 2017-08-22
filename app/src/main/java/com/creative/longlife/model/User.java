@@ -1,29 +1,38 @@
 package com.creative.longlife.model;
 
+import java.io.Serializable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by jubayer on 8/21/2017.
  */
 
-public class User {
-    int id;
-    String name;
-    String email;
-    String sex;
-    String location;
+public class User implements Serializable {
 
-    public User(int id, String name, String email, String sex, String location) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.sex = sex;
-        this.location = location;
-    }
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("sex")
+    @Expose
+    private String sex;
+    @SerializedName("location")
+    @Expose
+    private String location;
+    private final static long serialVersionUID = 225902253673747591L;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,4 +67,5 @@ public class User {
     public void setLocation(String location) {
         this.location = location;
     }
+
 }

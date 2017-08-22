@@ -20,6 +20,7 @@ import com.creative.longlife.Utility.DeviceInfoUtils;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
+import com.creative.longlife.model.Login;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
@@ -133,6 +134,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     public void sendRequestForLogin(String url, final String email, final String password) {
 
+        url = url + "?" + "email=" + email + "&password=" + password;
         // TODO Auto-generated method stub
         showProgressDialog("Loading..", true, false);
 
@@ -141,10 +143,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onResponse(String response) {
 
-                        User receiveCardList = gson.fromJson(response, User.class);
-
-
                         dismissProgressDialog();
+
+                        Login login = gson.fromJson(response, Login.class);
+
+                        if(login.getSuccess() == 1){
+
+                            User user = login.getUser();
+                            MydApplication.getInstance().getPrefManger().setUserProfile(user);
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
+
+                        }else{
+                            AlertDialogForAnything.showAlertDialogWhenComplte(LoginActivity.this,"Error","Wrong login information!",false);
+                        }
+
+
 
                     }
                 }, new com.android.volley.Response.ErrorListener() {
@@ -153,19 +167,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 dismissProgressDialog();
 
-                AlertDialogForAnything.showAlertDialogWhenComplte(LoginActivity.this, "ERROR", "Your attachment isnt deleted. please try again!", false);
+                AlertDialogForAnything.showAlertDialogWhenComplte(LoginActivity.this, "Error", "Network problem. please try again!", false);
 
             }
-        }) {
+        })// {
 
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
-            }
-        };
+                // @Override
+                // protected Map<String, String> getParams() throws AuthFailureError {
+                //    Map<String, String> params = new HashMap<String, String>();
+                //    params.put("email", email);
+                //     params.put("password", password);
+                ///     return params;
+                //  }
+                //}
+                ;
 
         req.setRetryPolicy(new DefaultRetryPolicy(60000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
