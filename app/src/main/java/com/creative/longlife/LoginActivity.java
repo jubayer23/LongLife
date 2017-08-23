@@ -1,16 +1,12 @@
 package com.creative.longlife;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
@@ -23,9 +19,6 @@ import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Login;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -48,7 +41,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         /**
          * If User is not logged-in proceed with the login form
          * */
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         init();
 
