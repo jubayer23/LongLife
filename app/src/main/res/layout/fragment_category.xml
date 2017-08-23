@@ -9,7 +9,31 @@
         android:id="@+id/recycler_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:id="@+id/ll_no_category_warning_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You haven't selected any category yet!"
+            style="@style/subContentWarning"/>
+
+        <TextView
+            android:id="@+id/tv_choose_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/editableContentText"
+            android:text="Choose category"/>
+
+    </LinearLayout>
 
 
     <android.support.design.widget.FloatingActionButton

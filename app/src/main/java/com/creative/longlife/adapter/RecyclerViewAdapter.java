@@ -39,31 +39,31 @@ public class RecyclerViewAdapter
 
 
     public void onBindViewHolder(RecyclerView.ViewHolder paramViewHolder, int paramInt) {
-        Category localHeavyMovie =  this.moviesList.get(paramInt);
+        Category category =  this.moviesList.get(paramInt);
 
 
 
         if (paramViewHolder.getItemViewType() == 0) {
-            ((GridViewHolder) paramViewHolder).tv_movie_name.setText(localHeavyMovie.getTitleEnglish());
-            ((GridViewHolder) paramViewHolder).img_cover.setImageURI(localHeavyMovie.getMediumCoverImage());
+            ((GridViewHolder) paramViewHolder).tv_category_name.setText(category.getName());
+            //((GridViewHolder) paramViewHolder).img_cover.setImageURI(category.getMediumCoverImage());
             return;
         }
-        ((ListViewHolder) paramViewHolder).tv_movie_name.setText(localHeavyMovie.getTitleEnglish());
-        ((ListViewHolder) paramViewHolder).img_cover.setImageURI(localHeavyMovie.getMediumCoverImage());
-        if(localHeavyMovie.getGenres() != null && !localHeavyMovie.getGenres().isEmpty()){
-            ((ListViewHolder) paramViewHolder).tv_genre.setText(localHeavyMovie.getGenres().get(0));
-        }else{
-            ((ListViewHolder) paramViewHolder).tv_genre.setText("No genre");
-        }
+        //((ListViewHolder) paramViewHolder).tv_movie_name.setText(category.getTitleEnglish());
+        //((ListViewHolder) paramViewHolder).img_cover.setImageURI(category.getMediumCoverImage());
+        //if(category.getGenres() != null && !category.getGenres().isEmpty()){
+        //    ((ListViewHolder) paramViewHolder).tv_genre.setText(category.getGenres().get(0));
+       // }else{
+       //     ((ListViewHolder) paramViewHolder).tv_genre.setText("No genre");
+      //  }
 
-        ((ListViewHolder) paramViewHolder).tv_rating.setText("Rating : " +String.valueOf(localHeavyMovie.getRating()));
+       // ((ListViewHolder) paramViewHolder).tv_rating.setText("Rating : " +String.valueOf(category.getRating()));
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup paramViewGroup, int paramInt) {
-        if (paramInt == 0) {
+       // if (paramInt == 0) {
             return new GridViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_grid_item, null));
-        }
-       return new ListViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_list_item, null));
+       // }
+       //return new ListViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_list_item, null));
     }
 
     public void removeAllAndNotify() {
@@ -78,13 +78,13 @@ public class RecyclerViewAdapter
 
     public class GridViewHolder
             extends RecyclerView.ViewHolder {
-        public SimpleDraweeView img_cover;
-        public TextView tv_movie_name;
+        //public SimpleDraweeView img_cover;
+        public TextView tv_category_name;
 
         public GridViewHolder(View paramView) {
             super(paramView);
-            this.tv_movie_name = ((TextView) paramView.findViewById(R.id.tv_movie_name));
-            this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
+            this.tv_category_name = ((TextView) paramView.findViewById(R.id.tv_category_name));
+            //this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
         }
     }
 
@@ -97,10 +97,10 @@ public class RecyclerViewAdapter
 
         public ListViewHolder(View paramView) {
             super(paramView);
-            this.tv_movie_name = ((TextView) paramView.findViewById(R.id.tv_movie_name));
-            this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
-            this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
-            this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
+           // this.tv_movie_name = ((TextView) paramView.findViewById(R.id.tv_movie_name));
+            //this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
+            //this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
+            //this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
         }
     }
 }
