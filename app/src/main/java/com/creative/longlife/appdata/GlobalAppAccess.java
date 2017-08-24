@@ -12,6 +12,7 @@ public class GlobalAppAccess {
 
     public static final String URL_LOGIN = BASE_URL + "login.php";
     public static final String URL_ALL_CATEGORYLIST = BASE_URL + "allCategories.php";
+    public static final String URL_SELECT_CATEGORY = BASE_URL + "selectUserCategory.php";
     public static final String URL_USER_CATEGORYLIST = BASE_URL + "user_categorylist.php";
     public static final String URL_SERVICE = BASE_URL + "servicelist.php";
 }

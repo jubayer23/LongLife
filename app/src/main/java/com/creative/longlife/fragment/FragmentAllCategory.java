@@ -3,9 +3,7 @@ package com.creative.longlife.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +20,7 @@ import com.creative.longlife.HomeActivity;
 import com.creative.longlife.R;
 import com.creative.longlife.adapter.RecyclerViewAdapter;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
+import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
@@ -31,14 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jubayer on 8/23/2017.
+ * Created by jubayer on 8/24/2017.
  */
 
-public class FragmentCategory extends Fragment {
+public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
-    private static final int KEY_GRID_VIEW = 0;
-    private static final int KEY_LIST_VIEW = 1;
-    private static int KEY_CURRENT_VIEW = KEY_GRID_VIEW;
     // private GridView gridView;
     private RecyclerView recyclerView;
     /// private IconGridAdapter iconGridAdapter;
@@ -67,7 +63,7 @@ public class FragmentCategory extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_category, container, false);
 
 
         // Initialize the layout view ids
@@ -87,6 +83,8 @@ public class FragmentCategory extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        sendRequestToGetPlaceList(GlobalAppAccess.URL_ALL_CATEGORYLIST);
     }
 
 
@@ -141,6 +139,7 @@ public class FragmentCategory extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerViewAdapter = new RecyclerViewAdapter(categories, getActivity());
+        recyclerViewAdapter.setListStyle(RecyclerViewAdapter.ADAPTER_FOR_ALL_CATEGORY);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
@@ -150,7 +149,7 @@ public class FragmentCategory extends Fragment {
         Log.d("DEBUG", url);
 
 
-        url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
+       // url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
 
         // TODO Auto-generated method stub
         // final ProgressBar progressBar = (ProgressBar)dialog_add_tag.findViewById(R.id.dialog_progressbar);
@@ -176,7 +175,7 @@ public class FragmentCategory extends Fragment {
                             categories.addAll(movies.getCategories());
                             recyclerViewAdapter.notifyDataSetChanged();
                         } else {
-
+                            changeUiForNoCategory(true);
                         }
 
 

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.creative.longlife.R;
@@ -17,8 +18,8 @@ public class RecyclerViewAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    public static final int GRID = 0;
-    public static final int LIST = 1;
+    public static final int ADAPTER_FOR_USER_SELECTED_CATEGORY = 0;
+    public static final int ADAPTER_FOR_ALL_CATEGORY = 1;
     private int listStyle = 0;
     private Context mContext;
     private List<Category> moviesList;
@@ -60,10 +61,10 @@ public class RecyclerViewAdapter
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup paramViewGroup, int paramInt) {
-       // if (paramInt == 0) {
-            return new GridViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_grid_item, null));
-       // }
-       //return new ListViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_list_item, null));
+        if (paramInt == ADAPTER_FOR_USER_SELECTED_CATEGORY) {
+            return new GridViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_grid_user_selected_category_item, null));
+        }
+       return new ListViewHolder(LayoutInflater.from(paramViewGroup.getContext()).inflate(R.layout.row_grid_all_category_item, null));
     }
 
     public void removeAllAndNotify() {
@@ -90,15 +91,13 @@ public class RecyclerViewAdapter
 
     public class ListViewHolder
             extends RecyclerView.ViewHolder {
-        public TextView tv_movie_name;
-        public SimpleDraweeView img_cover;
-        public TextView tv_genre;
-        public TextView tv_rating;
+        public TextView tv_category_name;
+        public CheckBox chk_category;
 
         public ListViewHolder(View paramView) {
             super(paramView);
-           // this.tv_movie_name = ((TextView) paramView.findViewById(R.id.tv_movie_name));
-            //this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
+           this.tv_category_name = ((TextView) paramView.findViewById(R.id.tv_category_name));
+            this.chk_category = ((CheckBox) paramView.findViewById(R.id.chk_category));
             //this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
             //this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
         }

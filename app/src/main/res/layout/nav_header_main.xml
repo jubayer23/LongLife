@@ -9,11 +9,19 @@
 
 
     <TextView
+        android:id="@+id/tv_name"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Torent"
-        />
+        android:text="Torent" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Torent" />
 
 
 </LinearLayout>
