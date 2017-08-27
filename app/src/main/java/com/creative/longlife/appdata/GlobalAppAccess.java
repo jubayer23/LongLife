@@ -16,4 +16,11 @@ public class GlobalAppAccess {
     public static final String URL_SELECT_CATEGORY = BASE_URL + "userSelectedCategories.php";
     public static final String URL_USER_CATEGORYLIST = BASE_URL + "user_categorylist.php";
     public static final String URL_SERVICE = BASE_URL + "servicelist.php";
+
+
+
+    public static final String  CAT_FAVOURITE = "Favourite";
+    public static final String  CAT_EMERGENCY = "Emergency";
+    public static final String  CAT_OTHERS = "Others";
+    public static final String default_categories[] = {CAT_EMERGENCY,CAT_FAVOURITE,CAT_OTHERS};
 }
