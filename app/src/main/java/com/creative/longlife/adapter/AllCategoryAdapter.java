@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -23,6 +25,9 @@ import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class AllCategoryAdapter
@@ -33,6 +38,8 @@ public class AllCategoryAdapter
     private Context mContext;
     private List<Category> moviesList;
     private List<Category> user_categories;
+    private boolean isOnProgress = false;
+
 
     public AllCategoryAdapter(List<Category> paramList, List<Category> user_categories, Context paramContext) {
         this.moviesList = paramList;
@@ -50,27 +57,31 @@ public class AllCategoryAdapter
     }
 
 
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int paramInt) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int paramInt) {
         final Category category = this.moviesList.get(paramInt);
 
         ((ListViewHolder) holder).tv_category_name.setText(category.getName());
         ((ListViewHolder) holder).chk_category.setChecked(false);
         for (Category user_category : user_categories) {
-            if (user_category.getId() == category.getId()) {
+            if (user_category.getId().equals(category.getId())) {
                 ((ListViewHolder) holder).chk_category.setChecked(true);
                 break;
             }
         }
 
-        ((ListViewHolder) holder).chk_category.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((ListViewHolder) holder).chk_category.setClickable(false);
+        ((ListViewHolder) holder).chk_category.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sendRequestToGetPlaceList(GlobalAppAccess.URL_SELECT_CATEGORY,category.getId(),isChecked);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.d("DEBUG","called 1");
+                if(!isOnProgress){
+                    isOnProgress = true;
+                    boolean isChecked = ((ListViewHolder) holder).chk_category.isChecked();
+                    sendRequestToGetPlaceList(GlobalAppAccess.URL_SELECT_CATEGORY, category, !isChecked, view);
+                }
+                return false;
             }
         });
-
-        return;
-
 
     }
 
@@ -106,11 +117,11 @@ public class AllCategoryAdapter
     }
 
 
-
-
-    public void sendRequestToGetPlaceList(String url, String category_id,boolean status) {
+    public void sendRequestToGetPlaceList(String url, final Category category, final boolean status, final View buttonView) {
         url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId()
-        +"&category_id=" + category_id + "&status=" + status;
+                + "&category_id=" + category.getId() + "&status=" + status;
+
+        Log.d("DEBUG",url);
 
         showProgressDialog("loading..", true, false);
 
@@ -118,24 +129,63 @@ public class AllCategoryAdapter
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        isOnProgress = false;
 
                         dismissProgressDialog();
 
+                        Log.d("DEBUG",response);
 
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getInt("success") == 1) {
+
+                                if (status) {
+                                    user_categories.add(category);
+                                } else {
+                                    for (int i = 0; i < user_categories.size(); i++) {
+                                        if (user_categories.get(i).getId().equals(category.getId())) {
+                                            user_categories.remove(i);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (status) ((CheckBox)buttonView).setChecked(true);
+                                else ((CheckBox)buttonView).setChecked(false);
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            AlertDialogForAnything.showAlertDialogWhenComplte(mContext,
+                                    "ERROR",
+                                    "Something went wrong!!",
+                                    false);
+
+                            if (!status) ((CheckBox)buttonView).setChecked(true);
+                            else ((CheckBox)buttonView).setChecked(false);
+
+                        }
 
 
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new com.android.volley.Response.ErrorListener()
+
+        {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                if (!status) ((CheckBox)buttonView).setChecked(true);
+                else ((CheckBox)buttonView).setChecked(false);
+                isOnProgress = false;
                 dismissProgressDialog();
                 //progressBar.setVisibility(View.GONE);
                 AlertDialogForAnything.showAlertDialogWhenComplte(mContext,
                         "ERROR",
                         "Something went wrong!!",
                         false);
+
+
 
             }
         });
@@ -144,11 +194,12 @@ public class AllCategoryAdapter
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // TODO Auto-generated method stub
         MydApplication.getInstance().addToRequestQueue(req);
+
     }
 
 
-
     private ProgressDialog progressDialog;
+
     public void showProgressDialog(String message, boolean isIntermidiate, boolean isCancelable) {
        /**/
         if (progressDialog == null) {
@@ -175,6 +226,6 @@ public class AllCategoryAdapter
 
 
 /* Location:           E:\APK\dex2jar\classes-dex2jar.jar
- * Qualified Name:     vinitm.yts.Views.InfiniteScrollRecyclerView.Adapter.RecyclerViewAdapter
+ * Qualified Name:     vinitm.yts.Views.InfiniteScrollRecyclerView.Adapter.UserCategoryAdapter
  * JD-Core Version:    0.7.0.1
  */

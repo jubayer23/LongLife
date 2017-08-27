@@ -13,6 +13,7 @@
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/contentHeader"
         android:text="Torent" />
 
     <TextView
@@ -21,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        style="@style/subContentTextSmall"
         android:text="Torent" />
 
 

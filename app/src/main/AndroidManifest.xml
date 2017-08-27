@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".AllCategoryActivity"></activity>
+        <activity android:name=".AllCategoryActivity" />
+        <activity android:name=".RegistrationActivity"></activity>
     </application>
 
 </manifest>

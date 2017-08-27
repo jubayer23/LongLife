@@ -33,7 +33,7 @@
 
     <style name="contentHeader">
         <item name="android:textSize">@dimen/font_large</item>
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="contentHeaderBlack">
@@ -43,7 +43,7 @@
 
     <style name="contentText">
         <item name="android:textSize">@dimen/font_medium</item>
-        <item name="android:textColor">@color/blue_grey_dark</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 
@@ -54,7 +54,7 @@
     </style>
     <style name="subContentTextSmall">
         <item name="android:textSize">@dimen/font_normal</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/white</item>
     </style>
     <style name="subContentTextMedium">
         <item name="android:textSize">@dimen/font_medium</item>

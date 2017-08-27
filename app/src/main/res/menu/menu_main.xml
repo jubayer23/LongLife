@@ -4,16 +4,10 @@
 
     <item
         android:id="@+id/action_search"
-        android:actionViewClass="android.widget.SearchView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search"
         app:showAsAction="always" />
 
-
-    <item
-        android:id="@+id/action_more_categories"
-        android:icon="@drawable/ic_more_categories"
-        android:title="Toggle"
-        app:showAsAction="always" />
 
 </menu>

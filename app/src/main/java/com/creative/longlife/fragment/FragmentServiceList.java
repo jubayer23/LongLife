@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +19,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.HomeActivity;
 import com.creative.longlife.R;
+import com.creative.longlife.adapter.ServiceListAdapter;
 import com.creative.longlife.adapter.UserCategoryAdapter;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
+import com.creative.longlife.model.Service;
+import com.creative.longlife.model.ServiceList;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -33,26 +37,27 @@ import java.util.List;
  * Created by jubayer on 8/24/2017.
  */
 
-public class FragmentAllCategory extends android.support.v4.app.Fragment {
+public class FragmentServiceList extends android.support.v4.app.Fragment {
 
     // private GridView gridView;
     private RecyclerView recyclerView;
     /// private IconGridAdapter iconGridAdapter;
-    private UserCategoryAdapter userCategoryAdapter;
+    private ServiceListAdapter serviceListAdapter;
 
-    List<Category> categories = new ArrayList<>();
+    List<Service> services = new ArrayList<>();
 
     private Gson gson;
 
-
     //LinearLayoutManager listLayoutManager;
-    GridLayoutManager gridLayoutManager;
+    LinearLayoutManager listLayoutManager;
 
-    private FloatingActionButton fabTopToTheList;
-
-    LinearLayout ll_no_category_warning_container;
+    LinearLayout ll_no_category_warning_container,ll_recycler_container;
 
     TextView tv_choose_category;
+
+    private Category category;
+
+    private TextView tv_category_name;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,8 +68,10 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_service_list, container, false);
 
+
+        category = getArguments().getParcelable(HomeActivity.KEY_CATEGORY);
 
         // Initialize the layout view ids
         init(view);
@@ -74,7 +81,6 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
         //load all event from database and show them in the UI
         //initializeUi();
-
         changeUiForNoCategory(false);
 
         return view;
@@ -84,7 +90,7 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sendRequestToGetPlaceList(GlobalAppAccess.URL_ALL_CATEGORYLIST);
+        sendRequestToGetPlaceList(GlobalAppAccess.URL_SERVICE);
     }
 
 
@@ -92,22 +98,14 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
         gson = new Gson();
 
+        tv_category_name = (TextView)view.findViewById(R.id.tv_category_name);
+        tv_category_name.setText(category.getName());
+
         // gridView = (GridView) view.findViewById(R.id.gridview_latestmovie);
         ll_no_category_warning_container = (LinearLayout) view.findViewById(R.id.ll_no_category_warning_container);
-
+        ll_recycler_container = (LinearLayout) view.findViewById(R.id.ll_recycler_container);
 
         tv_choose_category = (TextView) view.findViewById(R.id.tv_choose_category);
-
-        fabTopToTheList = (FloatingActionButton) view.findViewById(R.id.fabTopToTheList);
-        fabTopToTheList.setVisibility(View.GONE);
-        fabTopToTheList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //recyclerView.scrollToPosition(0);
-                recyclerView.smoothScrollToPosition(0);
-                //recyclerView.setScrollY(0);
-            }
-        });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -117,10 +115,10 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
         if (isNocategory) {
             ll_no_category_warning_container.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            ll_recycler_container.setVisibility(View.GONE);
         } else {
             ll_no_category_warning_container.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            ll_recycler_container.setVisibility(View.VISIBLE);
         }
 
     }
@@ -133,20 +131,21 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
         //listLayoutManager = new LinearLayoutManager(getActivity());
         //listLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        final int numberOfColumns = 2;
-        gridLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns);
+        listLayoutManager = new LinearLayoutManager(getActivity());
+        listLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        serviceListAdapter = new ServiceListAdapter(services, getActivity());
 
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(listLayoutManager);
 
-        userCategoryAdapter = new UserCategoryAdapter(categories, getActivity());
-        userCategoryAdapter.setListStyle(UserCategoryAdapter.ADAPTER_FOR_ALL_CATEGORY);
-        recyclerView.setAdapter(userCategoryAdapter);
+        recyclerView.setAdapter(serviceListAdapter);
     }
 
 
     public void sendRequestToGetPlaceList(String url) {
 
         Log.d("DEBUG", url);
+
+        url = url + "?category_id=" + category.getId();
 
 
        // url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
@@ -168,12 +167,12 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
                         // progressBar.setVisibility(View.GONE);
                         Log.d("DEBUG", response);
 
-                        CategoryList movies = gson.fromJson(response, CategoryList.class);
+                        ServiceList movies = gson.fromJson(response, ServiceList.class);
 
 
                         if (movies.getSuccess() == 1) {
-                            categories.addAll(movies.getCategories());
-                            userCategoryAdapter.notifyDataSetChanged();
+                             services.addAll(movies.getServices());
+                             serviceListAdapter.notifyDataSetChanged();
                         } else {
                             changeUiForNoCategory(true);
                         }

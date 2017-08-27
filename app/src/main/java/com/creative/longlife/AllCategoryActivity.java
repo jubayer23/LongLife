@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +11,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.adapter.AllCategoryAdapter;
-import com.creative.longlife.adapter.RecyclerViewAdapter;
+import com.creative.longlife.adapter.UserCategoryAdapter;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
@@ -61,6 +59,7 @@ public class AllCategoryActivity extends BaseActivity {
 
         //user_categories = getIntent().getParcelableExtra(HomeActivity.KEY_USER_CATEGORIES);
         user_categories = this.getIntent().getExtras().getParcelableArrayList(HomeActivity.KEY_USER_CATEGORIES);
+        Log.d("DEBUG",String.valueOf(user_categories.size()));
         // initialize listView adapter
         initAdapter();
 
@@ -119,7 +118,7 @@ public class AllCategoryActivity extends BaseActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerViewAdapter = new AllCategoryAdapter(categories,user_categories,this);
-        recyclerViewAdapter.setListStyle(RecyclerViewAdapter.ADAPTER_FOR_USER_SELECTED_CATEGORY);
+        recyclerViewAdapter.setListStyle(UserCategoryAdapter.ADAPTER_FOR_USER_SELECTED_CATEGORY);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 

@@ -19,10 +19,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.HomeActivity;
 import com.creative.longlife.R;
-import com.creative.longlife.adapter.RecyclerViewAdapter;
+import com.creative.longlife.adapter.UserCategoryAdapter;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
+import com.creative.longlife.eventListener.RecyclerItemClickListener;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
 import com.google.gson.Gson;
@@ -34,7 +35,7 @@ import java.util.List;
  * Created by jubayer on 8/23/2017.
  */
 
-public class FragmentUserCategory extends Fragment {
+public class FragmentUserCategory extends Fragment implements View.OnClickListener {
 
     private static final int KEY_GRID_VIEW = 0;
     private static final int KEY_LIST_VIEW = 1;
@@ -42,7 +43,7 @@ public class FragmentUserCategory extends Fragment {
     // private GridView gridView;
     private RecyclerView recyclerView;
     /// private IconGridAdapter iconGridAdapter;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private UserCategoryAdapter userCategoryAdapter;
 
     List<Category> categories = new ArrayList<>();
 
@@ -52,7 +53,7 @@ public class FragmentUserCategory extends Fragment {
     //LinearLayoutManager listLayoutManager;
     GridLayoutManager gridLayoutManager;
 
-    private FloatingActionButton fabTopToTheList;
+    private FloatingActionButton fab_add_more_categories;
 
     LinearLayout ll_no_category_warning_container;
 
@@ -75,6 +76,8 @@ public class FragmentUserCategory extends Fragment {
 
         // initialize listView adapter
         initAdapter();
+
+        initRecyclerViewClickListener();
 
         //load all event from database and show them in the UI
         //initializeUi();
@@ -102,16 +105,8 @@ public class FragmentUserCategory extends Fragment {
 
         tv_choose_category = (TextView) view.findViewById(R.id.tv_choose_category);
 
-        fabTopToTheList = (FloatingActionButton) view.findViewById(R.id.fabTopToTheList);
-        fabTopToTheList.setVisibility(View.GONE);
-        fabTopToTheList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //recyclerView.scrollToPosition(0);
-                recyclerView.smoothScrollToPosition(0);
-                //recyclerView.setScrollY(0);
-            }
-        });
+        fab_add_more_categories = (FloatingActionButton) view.findViewById(R.id.fab_add_more_category);
+        fab_add_more_categories.setOnClickListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -142,11 +137,29 @@ public class FragmentUserCategory extends Fragment {
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        recyclerViewAdapter = new RecyclerViewAdapter(categories, getActivity());
-        recyclerViewAdapter.setListStyle(RecyclerViewAdapter.ADAPTER_FOR_USER_SELECTED_CATEGORY);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        userCategoryAdapter = new UserCategoryAdapter(categories, getActivity());
+        userCategoryAdapter.setListStyle(UserCategoryAdapter.ADAPTER_FOR_USER_SELECTED_CATEGORY);
+        recyclerView.setAdapter(userCategoryAdapter);
     }
 
+    private void initRecyclerViewClickListener() {
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        // do whatever
+                        Log.d("DEBUG","called");
+                        Category category = categories.get(position);
+                        ((HomeActivity) getActivity()).proceedToDisplayServiceListPage(category);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+    }
 
     public void sendRequestToGetPlaceList(String url) {
 
@@ -177,7 +190,7 @@ public class FragmentUserCategory extends Fragment {
 
                         if (movies.getSuccess() == 1) {
                             categories.addAll(movies.getCategories());
-                            recyclerViewAdapter.notifyDataSetChanged();
+                            userCategoryAdapter.notifyDataSetChanged();
                         } else {
                             changeUiForNoCategory(true);
                         }
@@ -204,7 +217,38 @@ public class FragmentUserCategory extends Fragment {
         MydApplication.getInstance().addToRequestQueue(req);
     }
 
-    public List<Category> userCategories(){
+    public List<Category> userCategories() {
         return categories;
     }
+
+    public void setUserCategories(List<Category> newUserCategories) {
+        categories.clear();
+
+        categories.addAll(newUserCategories);
+
+        if (categories.size() > 0) {
+            changeUiForNoCategory(false);
+        } else {
+            changeUiForNoCategory(true);
+        }
+
+        userCategoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        if (id == R.id.fab_add_more_category) {
+            ((HomeActivity) getActivity()).proceedToAllCategoryActivity(categories);
+        }
+    }
+
+    public void filterSearch(String text){
+
+        //userCategoryAdapter.filter(text);
+        userCategoryAdapter.getFilter().filter(text);
+    }
+
+
 }

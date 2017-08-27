@@ -28,6 +28,14 @@ public class User implements Serializable {
     private String location;
     private final static long serialVersionUID = 225902253673747591L;
 
+    public User(String id, String name, String email, String sex, String location) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.sex = sex;
+        this.location = location;
+    }
+
     public String getId() {
         return id;
     }

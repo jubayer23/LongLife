@@ -4,13 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/ll_recycler_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:scrollbars="vertical" />
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_category_name"
+            style="@style/contentHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:text="Category Name" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+             />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_no_category_warning_container"
@@ -21,17 +40,10 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/subContentWarning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You haven't selected any category yet!"
-            style="@style/subContentWarning"/>
-
-        <TextView
-            android:id="@+id/tv_choose_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/editableContentText"
-            android:text="Choose category"/>
+            android:text="No service available for this category!" />
 
     </LinearLayout>
 
@@ -44,6 +56,7 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
         android:src="@drawable/ic_add_black" />
 
 

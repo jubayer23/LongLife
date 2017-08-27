@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:layout_margin="2dp"
-        card_view:cardBackgroundColor="@color/red"
+        card_view:cardBackgroundColor="@color/blue_grey"
         card_view:cardCornerRadius="5dp">
 
         <RelativeLayout

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -26,6 +27,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     // UI references.
     private Button btn_submit;
     private EditText ed_email, ed_password;
+    private TextView tv_register_now;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         ed_password = (EditText) findViewById(R.id.ed_password);
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(this);
+        tv_register_now = (TextView) findViewById(R.id.tv_register_now);
+        tv_register_now.setOnClickListener(this);
     }
 
     private void initializeCacheValue() {
@@ -79,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
         if (id == R.id.btn_submit) {
-            //if (isValidCredentialsProvided()) {
+            if (isValidCredentialsProvided()) {
 
                 CommonMethods.hideKeyboardForcely(this, ed_email);
                 CommonMethods.hideKeyboardForcely(this, ed_password);
@@ -87,7 +91,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 saveCache(ed_email.getText().toString());
 
                 sendRequestForLogin(GlobalAppAccess.URL_LOGIN, ed_email.getText().toString(), ed_password.getText().toString());
-           // }
+           }
+        }
+
+
+        if(id == R.id.tv_register_now){
+            startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
         }
     }
 
