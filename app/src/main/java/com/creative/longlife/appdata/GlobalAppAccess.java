@@ -4,6 +4,8 @@ package com.creative.longlife.appdata;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.creative.longlife.model.Category;
+
 import java.util.UUID;
 
 public class GlobalAppAccess {
@@ -21,6 +23,7 @@ public class GlobalAppAccess {
 
     public static final String  CAT_FAVOURITE = "Favourite";
     public static final String  CAT_EMERGENCY = "Emergency";
-    public static final String  CAT_OTHERS = "Others";
-    public static final String default_categories[] = {CAT_EMERGENCY,CAT_FAVOURITE,CAT_OTHERS};
+
+    public static Category default_category_fav = new Category("-100",CAT_FAVOURITE,"none");
+    public static Category default_category_EMR = new Category("-200",CAT_EMERGENCY,"none");
 }

@@ -31,6 +31,12 @@ public class Category implements Parcelable
         priority = in.readString();
     }
 
+    public Category(String id, String name, String priority) {
+        this.id = id;
+        this.name = name;
+        this.priority = priority;
+    }
+
     public static final Creator<Category> CREATOR = new Creator<Category>() {
         @Override
         public Category createFromParcel(Parcel in) {

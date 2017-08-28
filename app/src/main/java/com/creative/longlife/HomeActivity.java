@@ -1,6 +1,5 @@
 package com.creative.longlife;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -11,13 +10,13 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.creative.longlife.appdata.MydApplication;
+import com.creative.longlife.fragment.FragmentAllCategory;
 import com.creative.longlife.fragment.FragmentServiceList;
 import com.creative.longlife.fragment.FragmentUserCategory;
 import com.creative.longlife.model.Category;
@@ -26,17 +25,21 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,SearchView.OnQueryTextListener {
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     private static final String TAG_USER_CATEGORY_FRAGMENT = "user_category_fragment";
     private static final String TAG_SERVICE_LIST_FRAGMENT = "service_list_fragment";
+    private static final String TAG_All_CATEGORY_FRAGMENT = "all_category";
     public static final String KEY_USER_CATEGORIES = "user_category_list";
     public static final String KEY_CATEGORY = "category";
     private static final int REQUEST_KEY_ALL_CATEGORY = 100;
+    private static final int ANIMATION_TYPE_ADD_FRAGMENT = 1;
+    private static final int ANIMATION_TYPE_REMOVE_FRAGMENT = 0;
 
     private FragmentUserCategory fragmentUserCategory;
 
     private FragmentServiceList fragmentServiceList;
+    private FragmentAllCategory fragmentAllCategory;
 
     private Menu menu;
 
@@ -69,6 +72,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     // you never accidentally layer multiple Fragments on top of each other
                     // unless of course that's your intention
                     .replace(R.id.content_layout, fragmentUserCategory, TAG_USER_CATEGORY_FRAGMENT)
+                    .addToBackStack(null)
                     .commit();
         } else {
             // The Activity IS being re-created so we don't need to instantiate the Fragment or add it,
@@ -168,49 +172,19 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    public void proceedToAllCategoryActivity(List<Category> user_category_list) {
+    public void proceedToAllCategoryFragment(List<Category> user_category_list) {
 
-        Intent intent = new Intent(HomeActivity.this, AllCategoryActivity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(KEY_USER_CATEGORIES, (ArrayList<? extends Parcelable>) user_category_list);
-        intent.putExtras(bundle);
-
-        // intent.putExtra(KEY_USER_CATEGORIES, (Parcelable) user_category_list);
-
-        startActivityForResult(intent, REQUEST_KEY_ALL_CATEGORY);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == REQUEST_KEY_ALL_CATEGORY) {
-            if (resultCode == Activity.RESULT_OK) {
-                List<Category> user_category_list = data.getExtras().getParcelableArrayList(KEY_USER_CATEGORIES);
-                fragmentUserCategory.setUserCategories(user_category_list);
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
-        }
-    }//onActivit
-
-    public void proceedToDisplayServiceListPage(Category category) {
-
-        fragmentServiceList = new FragmentServiceList();
+        fragmentAllCategory = new FragmentAllCategory();
         Bundle arguments = new Bundle();
-        arguments.putParcelable(KEY_CATEGORY, category);
-        fragmentServiceList.setArguments(arguments);
+        arguments.putParcelableArrayList(KEY_USER_CATEGORIES, (ArrayList<? extends Parcelable>) user_category_list);
+        fragmentAllCategory.setArguments(arguments);
 
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
+        FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_ADD_FRAGMENT);
 
-        if (fragmentServiceList.isAdded()) { // if the fragment is already in container
-            transaction.show(fragmentServiceList);
+        if (fragmentAllCategory.isAdded()) { // if the fragment is already in container
+            transaction.show(fragmentAllCategory);
         } else { // fragment needs to be added to frame container
-            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-            transaction.add(R.id.content_layout, fragmentServiceList, TAG_SERVICE_LIST_FRAGMENT);
+            transaction.add(R.id.content_layout, fragmentAllCategory, TAG_All_CATEGORY_FRAGMENT);
         }
         // Hide fragment B
         if (fragmentUserCategory.isAdded()) {
@@ -220,10 +194,32 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
+    public void proceedToServiceListFragment(Category category) {
+
+        fragmentServiceList = new FragmentServiceList();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(KEY_CATEGORY, category);
+        fragmentServiceList.setArguments(arguments);
+
+        FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_ADD_FRAGMENT);
+
+        if (fragmentServiceList.isAdded()) { // if the fragment is already in container
+            transaction.show(fragmentServiceList);
+        } else { // fragment needs to be added to frame container
+            transaction.add(R.id.content_layout, fragmentServiceList, TAG_SERVICE_LIST_FRAGMENT);
+        }
+        if (fragmentUserCategory.isAdded()) {
+            transaction.hide(fragmentUserCategory);
+        }
+        transaction.commit();
+    }
+
+
     @Override
     public void onBackPressed() {
-        if (fragmentServiceList!=null && fragmentServiceList.isAdded()) { // if the fragment is already in container
-
+        if (fragmentServiceList != null && fragmentServiceList.isAdded()) {
+            gotoHomePage();
+        } else if (fragmentAllCategory != null && fragmentAllCategory.isAdded()) {
             gotoHomePage();
         } else {
             super.onBackPressed();
@@ -233,23 +229,37 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void gotoHomePage() {
 
-        if (fragmentServiceList!=null && fragmentServiceList.isAdded()) { // if the fragment is already in container
+        if (fragmentServiceList != null && fragmentServiceList.isAdded()) { // if the fragment is already in container
 
-            FragmentTransaction transaction = getSupportFragmentManager()
-                    .beginTransaction();
+            FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_ADD_FRAGMENT);
             transaction.remove(fragmentServiceList);
+            transaction.show(fragmentUserCategory);
+            transaction.commit();
+        }
+        if (fragmentAllCategory != null && fragmentAllCategory.isAdded()) { // if the fragment is already in container
 
-            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-            transaction
-                    .show(fragmentUserCategory);
-
+            FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_REMOVE_FRAGMENT);
+            transaction.remove(fragmentAllCategory);
+            transaction.show(fragmentUserCategory);
             transaction.commit();
         }
     }
 
+
+    private FragmentTransaction getTransaction(int animation_type) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        if (animation_type == ANIMATION_TYPE_ADD_FRAGMENT) {
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        } else if (animation_type == ANIMATION_TYPE_REMOVE_FRAGMENT) {
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        }
+        return transaction;
+    }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
-        if(fragmentUserCategory.isAdded()){
+        if (fragmentUserCategory.isAdded()) {
             fragmentUserCategory.filterSearch(query);
         }
         return true;
@@ -257,7 +267,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if(fragmentUserCategory.isAdded()){
+        if (fragmentUserCategory.isAdded()) {
             fragmentUserCategory.filterSearch(newText);
         }
         return true;

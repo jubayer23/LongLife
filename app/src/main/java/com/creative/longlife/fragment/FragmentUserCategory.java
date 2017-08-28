@@ -74,6 +74,8 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
         // Initialize the layout view ids
         init(view);
 
+        initDetaultCategory();
+
         // initialize listView adapter
         initAdapter();
 
@@ -110,6 +112,11 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
+    }
+
+    private void initDetaultCategory(){
+            categories.add(GlobalAppAccess.default_category_fav);
+            categories.add(GlobalAppAccess.default_category_EMR);
     }
 
     private void changeUiForNoCategory(boolean isNocategory) {
@@ -150,7 +157,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
                         // do whatever
                         Log.d("DEBUG","called");
                         Category category = categories.get(position);
-                        ((HomeActivity) getActivity()).proceedToDisplayServiceListPage(category);
+                        ((HomeActivity) getActivity()).proceedToServiceListFragment(category);
                     }
 
                     @Override
@@ -162,8 +169,6 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
     }
 
     public void sendRequestToGetPlaceList(String url) {
-
-        Log.d("DEBUG", url);
 
 
         url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
@@ -181,9 +186,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
 
                         ((HomeActivity) getActivity()).dismissProgressDialog();
 
-
                         // progressBar.setVisibility(View.GONE);
-                        Log.d("DEBUG", response);
 
                         CategoryList movies = gson.fromJson(response, CategoryList.class);
 
@@ -240,7 +243,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
         int id = view.getId();
 
         if (id == R.id.fab_add_more_category) {
-            ((HomeActivity) getActivity()).proceedToAllCategoryActivity(categories);
+            ((HomeActivity) getActivity()).proceedToAllCategoryFragment(categories);
         }
     }
 

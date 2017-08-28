@@ -73,7 +73,6 @@ public class AllCategoryAdapter
         ((ListViewHolder) holder).chk_category.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.d("DEBUG","called 1");
                 if(!isOnProgress){
                     isOnProgress = true;
                     boolean isChecked = ((ListViewHolder) holder).chk_category.isChecked();
