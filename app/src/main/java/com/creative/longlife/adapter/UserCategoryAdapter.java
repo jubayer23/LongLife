@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.creative.longlife.R;
+import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.model.Category;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class UserCategoryAdapter
 
         if (paramViewHolder.getItemViewType() == 0) {
             ((GridViewHolder) paramViewHolder).tv_category_name.setText(category.getName());
-            //((GridViewHolder) paramViewHolder).img_cover.setImageURI(category.getMediumCoverImage());
+            ((GridViewHolder) paramViewHolder).img_icon.setImageResource(getImageResources(category.getId(),category.getName()));
             return;
         }
         //((ListViewHolder) paramViewHolder).tv_movie_name.setText(category.getTitleEnglish());
@@ -62,6 +64,19 @@ public class UserCategoryAdapter
         //  }
 
         // ((ListViewHolder) paramViewHolder).tv_rating.setText("Rating : " +String.valueOf(category.getRating()));
+    }
+
+    private int getImageResources(String id, String cat_name){
+
+        if(cat_name.equals(GlobalAppAccess.CAT_FAVOURITE)){
+            return R.drawable.icon_favorites;
+        }
+        if(cat_name.equals(GlobalAppAccess.CAT_EMERGENCY)){
+            return R.drawable.icon_phone;
+        }
+
+        return R.drawable.icon_other;
+
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup paramViewGroup, int paramInt) {
@@ -86,10 +101,12 @@ public class UserCategoryAdapter
             extends RecyclerView.ViewHolder {
         //public SimpleDraweeView img_cover;
         public TextView tv_category_name;
+        public ImageView img_icon;
 
         public GridViewHolder(View paramView) {
             super(paramView);
             this.tv_category_name = ((TextView) paramView.findViewById(R.id.tv_category_name));
+            this.img_icon = (ImageView)paramView.findViewById(R.id.img_icon);
             //this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
         }
     }

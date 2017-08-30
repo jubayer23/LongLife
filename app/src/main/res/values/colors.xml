@@ -29,6 +29,7 @@
     <color name="blue_grey_dark">#009688</color>
     <color name="blue_deep">#263238</color>
     <color name="blue_deep_light">#3f535c</color>
+    <color name="blue_deep_extreme">#2d2e3e</color>
 
     <color name="red_light">#FF5252</color>
     <color name="red">#FF1744</color>

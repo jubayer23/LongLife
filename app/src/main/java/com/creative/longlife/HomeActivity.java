@@ -72,7 +72,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     // you never accidentally layer multiple Fragments on top of each other
                     // unless of course that's your intention
                     .replace(R.id.content_layout, fragmentUserCategory, TAG_USER_CATEGORY_FRAGMENT)
-                    .addToBackStack(null)
                     .commit();
         } else {
             // The Activity IS being re-created so we don't need to instantiate the Fragment or add it,
@@ -231,7 +230,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (fragmentServiceList != null && fragmentServiceList.isAdded()) { // if the fragment is already in container
 
-            FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_ADD_FRAGMENT);
+            FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_REMOVE_FRAGMENT);
             transaction.remove(fragmentServiceList);
             transaction.show(fragmentUserCategory);
             transaction.commit();

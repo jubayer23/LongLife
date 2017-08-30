@@ -68,7 +68,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_category, container, false);
 
 
         // Initialize the layout view ids
