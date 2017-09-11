@@ -189,4 +189,8 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
         // TODO Auto-generated method stub
         MydApplication.getInstance().addToRequestQueue(req);
     }
+
+    public List<Category> getUser_categories(){
+        return user_categories;
+    }
 }

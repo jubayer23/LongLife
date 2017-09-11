@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -225,23 +226,23 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-
+    public static List<Category> selected_categories = new ArrayList<>();
     private void gotoHomePage() {
+        FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_REMOVE_FRAGMENT);
 
-        if (fragmentServiceList != null && fragmentServiceList.isAdded()) { // if the fragment is already in container
-
-            FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_REMOVE_FRAGMENT);
+        if (fragmentServiceList != null && fragmentServiceList.isAdded()) {
+            // if the fragment is already in container
             transaction.remove(fragmentServiceList);
-            transaction.show(fragmentUserCategory);
-            transaction.commit();
-        }
-        if (fragmentAllCategory != null && fragmentAllCategory.isAdded()) { // if the fragment is already in container
-
-            FragmentTransaction transaction = getTransaction(ANIMATION_TYPE_REMOVE_FRAGMENT);
+        } else if (fragmentAllCategory != null && fragmentAllCategory.isAdded()) {
+            // if the fragment is already in container
+            selected_categories.clear();
+            selected_categories.addAll(fragmentAllCategory.getUser_categories());
             transaction.remove(fragmentAllCategory);
-            transaction.show(fragmentUserCategory);
-            transaction.commit();
+            fragmentUserCategory.setUserCategories();
+
         }
+        transaction.show(fragmentUserCategory);
+        transaction.commit();
     }
 
 

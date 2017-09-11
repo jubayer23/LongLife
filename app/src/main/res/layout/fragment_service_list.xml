@@ -8,13 +8,13 @@
         android:id="@+id/ll_recycler_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+
         android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/tv_category_name"
-            style="@style/contentHeader"
+            style="@style/contentHeaderBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TextView

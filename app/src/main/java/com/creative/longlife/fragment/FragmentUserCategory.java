@@ -70,7 +70,6 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_category, container, false);
 
-
         // Initialize the layout view ids
         init(view);
 
@@ -155,7 +154,6 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
                     @Override
                     public void onItemClick(View view, int position) {
                         // do whatever
-                        Log.d("DEBUG","called");
                         Category category = categories.get(position);
                         ((HomeActivity) getActivity()).proceedToServiceListFragment(category);
                     }
@@ -194,8 +192,6 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
                         if (movies.getSuccess() == 1) {
                             categories.addAll(movies.getCategories());
                             userCategoryAdapter.notifyDataSetChanged();
-                        } else {
-                            changeUiForNoCategory(true);
                         }
 
 
@@ -224,10 +220,9 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
         return categories;
     }
 
-    public void setUserCategories(List<Category> newUserCategories) {
+    public void setUserCategories() {
         categories.clear();
-
-        categories.addAll(newUserCategories);
+        categories.addAll(HomeActivity.selected_categories);
 
         if (categories.size() > 0) {
             changeUiForNoCategory(false);
