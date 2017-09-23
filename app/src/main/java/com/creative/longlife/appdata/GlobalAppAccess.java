@@ -18,6 +18,8 @@ public class GlobalAppAccess {
     public static final String URL_SELECT_CATEGORY = BASE_URL + "userSelectedCategories.php";
     public static final String URL_USER_CATEGORYLIST = BASE_URL + "user_categorylist.php";
     public static final String URL_SERVICE = BASE_URL + "servicelist.php";
+    public static final String URL_STATES = BASE_URL + "nigerian_states.php";
+    public static final String URL_LOCAL_GOVT = BASE_URL + "local_govt.php";
 
 
 

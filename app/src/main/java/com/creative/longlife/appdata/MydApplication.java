@@ -9,10 +9,12 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.creative.longlife.sharedprefs.PrefManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
-
+import com.google.gson.Gson;
 
 
 public class MydApplication extends Application {
+
+    public static Gson gson;
 
     public static final String TAG = MydApplication.class.getSimpleName();
 
@@ -33,6 +35,8 @@ public class MydApplication extends Application {
         Fresco.initialize(getApplicationContext());
 
         pref = new PrefManager(this);
+
+        gson = new Gson();
     }
 
     public static synchronized MydApplication getInstance() {
