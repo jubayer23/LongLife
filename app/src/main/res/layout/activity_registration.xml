@@ -92,10 +92,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/ed_address"
+                    android:id="@+id/ed_gd_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address"
+                    android:hint="GD code (optional)"
                     android:inputType="text"
                     android:lines="2"
                     android:maxLines="3" />

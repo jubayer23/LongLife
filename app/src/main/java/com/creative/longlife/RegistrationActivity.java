@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -40,7 +41,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
     private static final int ACTION_CLEAR_DATA = 100;
     RadioGroup rd_sex;
-    EditText ed_name, ed_email, ed_password, ed_address;
+    EditText ed_name, ed_email, ed_password, ed_gd_code;
     Button btn_submit;
 
     private Spinner sp_location_states, sp_location_local_govt;
@@ -74,7 +75,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         ed_name = (EditText) findViewById(R.id.ed_name);
         ed_email = (EditText) findViewById(R.id.ed_email);
         ed_password = (EditText) findViewById(R.id.ed_password);
-        ed_address = (EditText) findViewById(R.id.ed_address);
+        ed_gd_code = (EditText) findViewById(R.id.ed_gd_code);
 
         rd_sex = (RadioGroup) findViewById(R.id.rd_sex);
 
@@ -110,15 +111,32 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
             String name = ed_name.getText().toString();
             String email = ed_email.getText().toString();
-            String address = ed_password.getText().toString();
-            String password = ed_address.getText().toString();
+            String password = ed_password.getText().toString();
+            String gd_code = ed_gd_code.getText().toString();
+            String state_name = sp_location_states.getSelectedItem().toString();
+            String local_govt_name = sp_location_local_govt.getSelectedItem().toString();
 
-            if (isValidCredentialsProvided(name, email, password, address)) {
+            if (isValidCredentialsProvided(name, email, password)) {
+                if (state_name.equals(KEY_SELECT_STATES)) {
+                    Toast.makeText(RegistrationActivity.this, "You must select a State!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (local_govt_name.equals(KEY_SELECT_LOCAL_GOVT)) {
+                    Toast.makeText(RegistrationActivity.this, "You must select a Local Govt!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 int selectedId = rd_sex.getCheckedRadioButtonId();
-
                 // find the radiobutton by returned id
                 RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
-                sendRequestForRegister(GlobalAppAccess.URL_REGISTER, name, email, password, address, radioSexButton.getText().toString());
+                sendRequestForRegister(GlobalAppAccess.URL_REGISTER,
+                        name,
+                        email,
+                        password,
+                        gd_code,
+                        state_name,
+                        local_govt_name,
+                        radioSexButton.getText().toString());
             }
 
         }
@@ -129,7 +147,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private boolean isValidCredentialsProvided(String name, String email, String password, String address) {
+    private boolean isValidCredentialsProvided(String name, String email, String password) {
 
         // Store values at the time of the login attempt.
 
@@ -138,7 +156,6 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         ed_name.setError(null);
         ed_email.setError(null);
         ed_password.setError(null);
-        ed_address.setError(null);
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(name)) {
             ed_name.setError("Required");
@@ -160,19 +177,21 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             ed_password.requestFocus();
             return false;
         }
-        if (TextUtils.isEmpty(address)) {
-            ed_address.setError("Required");
-            ed_address.requestFocus();
-            return false;
-        }
 
 
         return true;
     }
 
-    public void sendRequestForRegister(String url, final String name, final String email, String password, final String address, final String sex) {
+    public void sendRequestForRegister(String url, final String name, final String email, String password,
+                                       final String gd_code, String state_name,
+                                       String local_govt_name, final String sex) {
 
-        url = url + "?name=" + name + "&email=" + email + "&password=" + password + "&sex=" + sex + "&location=" + address;
+
+        url = url + "?name=" + name + "&email=" + email + "&password=" + password + "&sex=" + sex + "&state_name=" + state_name
+                + "&local_govt_name=" + local_govt_name;
+
+        if (!gd_code.isEmpty())
+            url = url + "&gd_code=" + gd_code;
         // TODO Auto-generated method stub
         showProgressDialog("Loading..", true, false);
 
@@ -190,7 +209,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                             if (jspJsonObject.getInt("success") == 1) {
 
                                 String user_id = jspJsonObject.getString("user_id");
-                                User user = new User(user_id, name, email, sex, address);
+                                User user = new User(user_id, name, email, sex, gd_code );
                                 MydApplication.getInstance().getPrefManger().setUserProfile(user);
                                 startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
                                 finish();
@@ -319,7 +338,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
                         LocalGovts localGovts = MydApplication.gson.fromJson(response, LocalGovts.class);
 
-                        updateSpinner(R.id.sp_location_local_govt,ACTION_CLEAR_DATA);
+                        updateSpinner(R.id.sp_location_local_govt, ACTION_CLEAR_DATA);
                         if (localGovts.getSuccess() == 1) {
 
                             for (Govt govt : localGovts.getGovts()) {
@@ -375,9 +394,9 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         if (id == R.id.sp_location_states) {
             if (!state_name.equals(KEY_SELECT_STATES)) {
                 // do your stuff
-                sendRequestToGetLocalGovt(GlobalAppAccess.URL_LOCAL_GOVT,state_name);
+                sendRequestToGetLocalGovt(GlobalAppAccess.URL_LOCAL_GOVT, state_name);
             } else {
-               updateSpinner(R.id.sp_location_local_govt,ACTION_CLEAR_DATA);
+                updateSpinner(R.id.sp_location_local_govt, ACTION_CLEAR_DATA);
             }
         }
 
@@ -390,17 +409,17 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    private void updateSpinner(int id,int action){
+    private void updateSpinner(int id, int action) {
 
-        if(id == R.id.sp_location_states){
-            switch (action){
-                case ACTION_CLEAR_DATA :
+        if (id == R.id.sp_location_states) {
+            switch (action) {
+                case ACTION_CLEAR_DATA:
                     break;
             }
         }
-        if(id == R.id.sp_location_local_govt){
-            switch (action){
-                case ACTION_CLEAR_DATA :
+        if (id == R.id.sp_location_local_govt) {
+            switch (action) {
+                case ACTION_CLEAR_DATA:
                     list_location_local_govt.clear();
                     list_location_local_govt.add(KEY_SELECT_LOCAL_GOVT);
                     spAdapterLocalGovt.notifyDataSetChanged();
