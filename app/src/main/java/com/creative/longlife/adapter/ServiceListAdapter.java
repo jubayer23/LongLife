@@ -66,21 +66,27 @@ public class ServiceListAdapter
 
         ((ServiceListAdapter.ListViewHolder) holder).tv_service_title.setText(service.getTitle());
         ((ListViewHolder) holder).tv_price.setText(service.getPrice());
-        ((ListViewHolder) holder).img_fav.setImageResource(R.drawable.love);
-        int count = 0;
 
         if (isFav.containsKey(service.getId())) {
             ((ListViewHolder) holder).img_fav.setImageResource(R.drawable.love_fill);
+        }else{
+            ((ListViewHolder) holder).img_fav.setImageResource(R.drawable.love);
         }
 
         ((ListViewHolder) holder).img_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isFav.containsKey(service.getId())) {
-                    favServiceList.remove(isFav.get(service.getId()));
-                    isFav.remove(service.getId());
-                    MydApplication.getInstance().getPrefManger().setFavServices(favServiceList);
-                    ((ListViewHolder) holder).img_fav.setImageResource(R.drawable.love);
+                    for(int i =0;i<favServiceList.size();i++){
+                        if(favServiceList.get(i).getId().equals(service.getId())){
+                            favServiceList.remove(i);
+                            isFav.remove(service.getId());
+                            MydApplication.getInstance().getPrefManger().setFavServices(favServiceList);
+                            ((ListViewHolder) holder).img_fav.setImageResource(R.drawable.love);
+                            break;
+                        }
+                    }
+
                 }else{
                     favServiceList.add(service);
                     isFav.put(service.getId(),favServiceList.size() -1 );

@@ -2,8 +2,6 @@ package com.creative.longlife.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,12 +18,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.HomeActivity;
 import com.creative.longlife.R;
 import com.creative.longlife.adapter.ServiceListAdapter;
-import com.creative.longlife.adapter.UserCategoryAdapter;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
-import com.creative.longlife.model.CategoryList;
 import com.creative.longlife.model.Service;
 import com.creative.longlife.model.ServiceList;
 import com.google.gson.Gson;
@@ -51,7 +47,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     //LinearLayoutManager listLayoutManager;
     LinearLayoutManager listLayoutManager;
 
-    LinearLayout ll_no_category_warning_container,ll_recycler_container;
+    LinearLayout ll_no_category_warning_container, ll_recycler_container;
 
     TextView tv_choose_category;
 
@@ -90,7 +86,19 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sendRequestToGetPlaceList(GlobalAppAccess.URL_SERVICE);
+        if (category.getId().equals(GlobalAppAccess.CAT_FAVOURITE_ID)) {
+
+            services.addAll(MydApplication.getInstance().getPrefManger().getFavServices());
+            serviceListAdapter.notifyDataSetChanged();
+
+            if (services.size() == 0)
+                changeUiForNoCategory(true);
+
+
+        } else {
+            sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
+        }
+
     }
 
 
@@ -98,7 +106,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
         gson = new Gson();
 
-        tv_category_name = (TextView)view.findViewById(R.id.tv_category_name);
+        tv_category_name = (TextView) view.findViewById(R.id.tv_category_name);
         tv_category_name.setText(category.getName());
 
         // gridView = (GridView) view.findViewById(R.id.gridview_latestmovie);
@@ -141,14 +149,14 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     }
 
 
-    public void sendRequestToGetPlaceList(String url) {
+    public void sendRequestToGetServiceList(String url) {
 
         Log.d("DEBUG", url);
 
         url = url + "?category_id=" + category.getId();
 
 
-       // url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
+        // url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
 
         // TODO Auto-generated method stub
         // final ProgressBar progressBar = (ProgressBar)dialog_add_tag.findViewById(R.id.dialog_progressbar);
@@ -171,8 +179,8 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
 
                         if (movies.getSuccess() == 1) {
-                             services.addAll(movies.getServices());
-                             serviceListAdapter.notifyDataSetChanged();
+                            services.addAll(movies.getServices());
+                            serviceListAdapter.notifyDataSetChanged();
                         } else {
                             changeUiForNoCategory(true);
                         }

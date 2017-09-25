@@ -136,7 +136,7 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
         //listLayoutManager = new LinearLayoutManager(getActivity());
         //listLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        final int numberOfColumns = 2;
+        final int numberOfColumns = 1;
         gridLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns);
 
         recyclerView.setLayoutManager(gridLayoutManager);

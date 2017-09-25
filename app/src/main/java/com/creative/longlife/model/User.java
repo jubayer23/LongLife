@@ -9,7 +9,8 @@ import com.google.gson.annotations.SerializedName;
  * Created by jubayer on 8/21/2017.
  */
 
-public class User implements Serializable {
+public class User implements Serializable
+{
 
     @SerializedName("id")
     @Expose
@@ -20,20 +21,32 @@ public class User implements Serializable {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("gdCode")
+    @Expose
+    private String gdCode;
+    @SerializedName("stateName")
+    @Expose
+    private String stateName;
+    @SerializedName("localGovtName")
+    @Expose
+    private String localGovtName;
     @SerializedName("sex")
     @Expose
     private String sex;
-    @SerializedName("location")
+    @SerializedName("dob")
     @Expose
-    private String location;
-    private final static long serialVersionUID = 225902253673747591L;
+    private String dob;
+    private final static long serialVersionUID = -664237076134602702L;
 
-    public User(String id, String name, String email, String sex, String location) {
+    public User(String id, String name, String email, String gdCode, String stateName, String localGovtName, String sex, String dob) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.gdCode = gdCode;
+        this.stateName = stateName;
+        this.localGovtName = localGovtName;
         this.sex = sex;
-        this.location = location;
+        this.dob = dob;
     }
 
     public String getId() {
@@ -60,6 +73,30 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getGdCode() {
+        return gdCode;
+    }
+
+    public void setGdCode(String gdCode) {
+        this.gdCode = gdCode;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
+    }
+
+    public String getLocalGovtName() {
+        return localGovtName;
+    }
+
+    public void setLocalGovtName(String localGovtName) {
+        this.localGovtName = localGovtName;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -68,12 +105,12 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
-    public String getLocation() {
-        return location;
+    public String getDob() {
+        return dob;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
 }

@@ -24,8 +24,10 @@ public class GlobalAppAccess {
 
 
     public static final String  CAT_FAVOURITE = "Favourite";
+    public static final String  CAT_FAVOURITE_ID = "-100";
     public static final String  CAT_EMERGENCY = "Emergency";
+    public static final String  CAT_EMERGENCY_ID = "Emergency";
 
-    public static Category default_category_fav = new Category("-100",CAT_FAVOURITE,"none");
-    public static Category default_category_EMR = new Category("-200",CAT_EMERGENCY,"none");
+    public static Category default_category_fav = new Category(CAT_FAVOURITE_ID,CAT_FAVOURITE,"none");
+    public static Category default_category_EMR = new Category(CAT_EMERGENCY_ID,CAT_EMERGENCY,"none");
 }

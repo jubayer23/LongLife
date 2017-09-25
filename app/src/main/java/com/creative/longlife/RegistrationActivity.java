@@ -183,18 +183,19 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void sendRequestForRegister(String url, final String name, final String email, String password,
-                                       final String gd_code, String state_name,
-                                       String local_govt_name, final String sex) {
+                                       String gd_code, final String state_name,
+                                       final String local_govt_name, final String sex) {
 
+        if (gd_code.isEmpty())
+            gd_code = "-100";
+        url = url + "?name=" + name + "&email=" + email + "&password=" + password
+                + "&gdCode=" + gd_code + "&sex=" + sex + "&stateName=" + state_name
+                + "&localGovtName=" + local_govt_name + "&dob=" + "12/13/2017";
 
-        url = url + "?name=" + name + "&email=" + email + "&password=" + password + "&sex=" + sex + "&state_name=" + state_name
-                + "&local_govt_name=" + local_govt_name;
-
-        if (!gd_code.isEmpty())
-            url = url + "&gd_code=" + gd_code;
         // TODO Auto-generated method stub
         showProgressDialog("Loading..", true, false);
 
+        final String finalGd_code = gd_code;
         final StringRequest req = new StringRequest(Request.Method.GET, url,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
@@ -209,7 +210,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                             if (jspJsonObject.getInt("success") == 1) {
 
                                 String user_id = jspJsonObject.getString("user_id");
-                                User user = new User(user_id, name, email, sex, gd_code );
+                                User user = new User(user_id, name, email,finalGd_code,state_name,local_govt_name,sex,"12/13/2017");
                                 MydApplication.getInstance().getPrefManger().setUserProfile(user);
                                 startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
                                 finish();
