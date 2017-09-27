@@ -73,6 +73,16 @@
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="contentHeaderGray">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="textPrice">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@color/green_dark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="contentText">
         <item name="android:textSize">@dimen/font_medium</item>

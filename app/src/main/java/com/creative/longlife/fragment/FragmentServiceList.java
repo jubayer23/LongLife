@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.HomeActivity;
 import com.creative.longlife.R;
 import com.creative.longlife.adapter.ServiceListAdapter;
+import com.creative.longlife.adapter.ServiceListAdapter2;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
@@ -38,7 +39,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     // private GridView gridView;
     private RecyclerView recyclerView;
     /// private IconGridAdapter iconGridAdapter;
-    private ServiceListAdapter serviceListAdapter;
+    private ServiceListAdapter2 serviceListAdapter;
 
     List<Service> services = new ArrayList<>();
 
@@ -141,7 +142,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
         listLayoutManager = new LinearLayoutManager(getActivity());
         listLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        serviceListAdapter = new ServiceListAdapter(services, getActivity());
+        serviceListAdapter = new ServiceListAdapter2(services, getActivity());
 
         recyclerView.setLayoutManager(listLayoutManager);
 
