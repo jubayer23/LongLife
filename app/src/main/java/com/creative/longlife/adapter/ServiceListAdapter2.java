@@ -1,6 +1,7 @@
 package com.creative.longlife.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.creative.longlife.R;
+import com.creative.longlife.ServiceDetailsActivity;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Service;
 
@@ -55,6 +57,32 @@ public class ServiceListAdapter2
 
         ((ListViewHolder) holder).tv_service_title.setText(service.getTitle());
         ((ListViewHolder) holder).tv_price.setText("$ " +service.getPrice());
+        ((ListViewHolder) holder).btn_see_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mContext.startActivity(new Intent(mContext, ServiceDetailsActivity.class));
+            }
+        });
+        ((ListViewHolder) holder).btn_call_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
         ((ListViewHolder) holder).btn_see_more.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -64,6 +92,8 @@ public class ServiceListAdapter2
                 }
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((ListViewHolder) holder).view_btn_see_more.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
+
+                    mContext.startActivity(new Intent(mContext, ServiceDetailsActivity.class));
                 }
 
 

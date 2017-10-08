@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".AllCategoryActivity" />
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".ServiceDetailsActivity"></activity>
     </application>
 
 </manifest>

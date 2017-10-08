@@ -103,6 +103,10 @@
         <item name="android:textSize">@dimen/font_medium</item>
         <item name="android:textColor">@color/gray</item>
     </style>
+    <style name="subContentTextMediumBlack">
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
     <style name="subContentTextLarge">
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:textColor">@color/gray</item>

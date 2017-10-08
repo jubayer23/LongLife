@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/colorPrimaryDark"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/cl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?colorPrimary"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/img_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                fresco:actualImageScaleType="focusCrop"
+                android:visibility="gone"
+                fresco:placeholderImage="@drawable/img_placeholder"
+                fresco:placeholderImageScaleType="fitCenter" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/img_placeholder_2" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/float_direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:onClick="showDirection"
+        android:src="@drawable/love"
+        app:backgroundTint="@color/white"
+        app:fabSize="auto"
+        app:elevation="6dp"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="end|bottom|center" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_setvice_title"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:background="@color/colorPrimary"
+                android:maxLines="1"
+                android:text="My Service"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:elevation="10dp"
+                android:background="@drawable/background_rounded_white_no_border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        style="@style/contentHeaderBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Price"
+                        android:layout_weight="5"/>
+
+                    <TextView
+                        style="@style/contentHeaderBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/textPrice"
+                        android:text=" $ 9000"
+                        android:layout_weight="5"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        style="@style/contentHeaderBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Company Name"
+                        android:layout_weight="5"/>
+
+                    <TextView
+                        style="@style/contentHeaderBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                    <TextView
+                        android:id="@+id/tv_company_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/subContentTextMediumBlack"
+                        android:text=" $ 9000"
+                        android:layout_weight="5"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        style="@style/contentHeaderBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Company Address"
+                        android:layout_weight="5"/>
+
+                    <TextView
+                        style="@style/contentHeaderBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/subContentTextMediumBlack"
+                        android:text=" Daspara, Khadim Nagar, shaparan, 3103, Bangladeshu"
+                        android:layout_weight="5"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/subContentTextMediumBlack"
+                        android:gravity="center"
+                        android:text="This is description. This is description. This is Description. This is description. This is description."
+                        android:layout_weight="5"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
