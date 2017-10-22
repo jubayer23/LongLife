@@ -9,7 +9,7 @@
 
 
     <color name="yellow">#ffd600</color>
-    <color name="yellow_light">#dece22</color>
+    <color name="yellow_light">#faffbd</color>
     <color name="yellow_dark">#9e9d24</color>
 
 
@@ -19,7 +19,7 @@
 
     <color name="green">#2baf2b</color>
     <color name="green_light">#17c617</color>
-    <color name="green_dark">#2e7d32</color>
+    <color name="green_dark">#08a95f</color>
 
 
     <color name="blue">#2962FF</color>
@@ -30,6 +30,7 @@
     <color name="blue_deep">#263238</color>
     <color name="blue_deep_light">#3f535c</color>
     <color name="blue_deep_extreme">#2d2e3e</color>
+    <color name="blue_deep_extreme_2">#3a3d4d</color>
 
     <color name="red_light">#FF5252</color>
     <color name="red">#FF1744</color>
