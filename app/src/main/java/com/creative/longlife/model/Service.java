@@ -10,7 +10,9 @@ import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Service implements Parcelable
+import java.io.Serializable;
+
+public class Service implements Parcelable,Serializable
 {
 
     @SerializedName("id")

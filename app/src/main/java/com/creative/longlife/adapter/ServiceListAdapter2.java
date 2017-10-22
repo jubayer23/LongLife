@@ -2,6 +2,7 @@ package com.creative.longlife.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.creative.longlife.ServiceDetailsActivity;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class ServiceListAdapter2
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+    public static final String KEY_SERVICE = "service";
     private int listStyle = 0;
     private Context mContext;
     private List<Service> moviesList;
@@ -57,29 +60,6 @@ public class ServiceListAdapter2
 
         ((ListViewHolder) holder).tv_service_title.setText(service.getTitle());
         ((ListViewHolder) holder).tv_price.setText("$ " +service.getPrice());
-        ((ListViewHolder) holder).btn_see_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mContext.startActivity(new Intent(mContext, ServiceDetailsActivity.class));
-            }
-        });
-        ((ListViewHolder) holder).btn_call_now.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -93,7 +73,9 @@ public class ServiceListAdapter2
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((ListViewHolder) holder).view_btn_see_more.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
 
-                    mContext.startActivity(new Intent(mContext, ServiceDetailsActivity.class));
+                    Intent intent = new Intent(mContext, ServiceDetailsActivity.class);
+                    intent.putExtra(KEY_SERVICE, (Serializable)service);
+                    mContext.startActivity(intent);
                 }
 
 
@@ -111,6 +93,10 @@ public class ServiceListAdapter2
                 }
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((ListViewHolder) holder).view_btn_call_now.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
+
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + service.getCompany().getPhone()));
+                    mContext.startActivity(intent);
                 }
 
                 return true;

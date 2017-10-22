@@ -152,8 +152,6 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
     public void sendRequestToGetServiceList(String url) {
 
-        Log.d("DEBUG", url);
-
         url = url + "?category_id=" + category.getId();
 
 
@@ -174,7 +172,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
 
                         // progressBar.setVisibility(View.GONE);
-                        Log.d("DEBUG", response);
+                        Log.d("DEBUG_service", response);
 
                         ServiceList movies = gson.fromJson(response, ServiceList.class);
 

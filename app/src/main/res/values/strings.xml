@@ -4,4 +4,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="activity_registration">Registration</string>
+    <string name="activity_service_detalis">Details</string>
+    <string name="activity_all_categories">Categories</string>
 </resources>

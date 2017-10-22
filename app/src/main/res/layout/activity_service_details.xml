@@ -4,9 +4,9 @@
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -29,10 +29,11 @@
                 android:id="@+id/img_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                fresco:actualImageScaleType="focusCrop"
                 android:visibility="gone"
+                fresco:actualImageScaleType="focusCrop"
                 fresco:placeholderImage="@drawable/img_placeholder"
                 fresco:placeholderImageScaleType="fitCenter" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -43,16 +44,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/float_direction"
+        android:id="@+id/fab_favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:onClick="showDirection"
         android:src="@drawable/love"
         app:backgroundTint="@color/white"
-        app:fabSize="auto"
         app:elevation="6dp"
+        app:fabSize="auto"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="end|bottom|center" />
 
@@ -68,14 +68,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_setvice_title"
+                android:id="@+id/tv_service_title"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center_vertical"
                 android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="My Service"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:text="My Service"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -84,16 +84,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:elevation="10dp"
                 android:background="@drawable/background_rounded_white_no_border"
+                android:elevation="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
 
@@ -101,31 +101,31 @@
                         style="@style/contentHeaderBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Price"
-                        android:layout_weight="5"/>
+                        android:layout_weight="3.5"
+                        android:text="Starting" />
 
                     <TextView
                         style="@style/contentHeaderBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":"/>
+                        android:text=": " />
 
                     <TextView
                         android:id="@+id/tv_price"
+                        style="@style/textPrice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/textPrice"
-                        android:text=" $ 9000"
-                        android:layout_weight="5"/>
+                        android:layout_weight="6.5"
+                        android:text=" $ 9000" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
 
@@ -133,31 +133,31 @@
                         style="@style/contentHeaderBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Company Name"
-                        android:layout_weight="5"/>
+                        android:layout_weight="3.5"
+                        android:text="Provider" />
 
                     <TextView
                         style="@style/contentHeaderBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":"/>
+                        android:text=": " />
 
                     <TextView
                         android:id="@+id/tv_company_name"
+                        style="@style/subContentTextMediumBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/subContentTextMediumBlack"
-                        android:text=" $ 9000"
-                        android:layout_weight="5"/>
+                        android:layout_weight="6.5"
+                        android:text=" $ 9000" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
 
@@ -165,43 +165,46 @@
                         style="@style/contentHeaderBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Company Address"
-                        android:layout_weight="5"/>
+                        android:layout_weight="3.5"
+                        android:text="Location" />
 
                     <TextView
                         style="@style/contentHeaderBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=":"/>
+                        android:text=": " />
 
                     <TextView
                         android:id="@+id/tv_address"
+                        style="@style/subContentTextMediumBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/subContentTextMediumBlack"
-                        android:text=" Daspara, Khadim Nagar, shaparan, 3103, Bangladeshu"
-                        android:layout_weight="5"/>
+                        android:layout_weight="6.5"
+                        android:text=" Daspara, Khadim Nagar, shaparan, 3103, Bangladeshu" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tv_description"
+                        style="@style/subContentTextMediumBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/subContentTextMediumBlack"
                         android:gravity="center"
-                        android:text="This is description. This is description. This is Description. This is description. This is description."
-                        android:layout_weight="5"/>
+                        android:text="This is description. This is description. This is Description. This is description. This is description." />
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/material_design_floating_action_menu" />
+
 </android.support.design.widget.CoordinatorLayout>

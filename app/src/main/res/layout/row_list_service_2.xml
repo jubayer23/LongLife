@@ -45,7 +45,7 @@
 
                     <TextView
                         android:id="@+id/tv_service_title"
-                        style="@style/contentHeaderBlack"
+                        style="@style/contentHeaderBlue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -102,7 +102,7 @@
                             style="@style/contentHeaderGray"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="See more" />
+                            android:text="See More" />
                     </LinearLayout>
 
 
