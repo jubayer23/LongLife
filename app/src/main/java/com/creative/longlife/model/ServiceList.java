@@ -4,14 +4,13 @@ package com.creative.longlife.model;
  * Created by comsol on 25-Aug-17.
  */
 
-import java.util.List;
-
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class ServiceList implements Parcelable {
 

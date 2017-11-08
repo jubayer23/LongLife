@@ -1,12 +1,7 @@
 package com.creative.longlife.appdata;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.creative.longlife.model.Category;
-
-import java.util.UUID;
 
 public class GlobalAppAccess {
 

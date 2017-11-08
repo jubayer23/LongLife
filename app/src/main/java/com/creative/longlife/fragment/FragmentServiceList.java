@@ -17,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.HomeActivity;
 import com.creative.longlife.R;
-import com.creative.longlife.adapter.ServiceListAdapter;
 import com.creative.longlife.adapter.ServiceListAdapter2;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;

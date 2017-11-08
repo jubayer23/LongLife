@@ -1,9 +1,9 @@
 package com.creative.longlife.model;
 
-import java.io.Serializable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by jubayer on 8/21/2017.

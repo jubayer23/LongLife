@@ -1,10 +1,8 @@
 package com.creative.longlife;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +23,6 @@ import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Govt;
 import com.creative.longlife.model.LocalGovts;
-import com.creative.longlife.model.Login;
 import com.creative.longlife.model.State;
 import com.creative.longlife.model.States;
 import com.creative.longlife.model.User;
