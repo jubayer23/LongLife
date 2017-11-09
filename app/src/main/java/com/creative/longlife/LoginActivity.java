@@ -164,6 +164,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         if(login.getSuccess() == 1){
 
                             User user = login.getUser();
+
+                            if(login.getLogin_type()!=null && !login.getLogin_type().isEmpty()){
+                                user.setLogin_type("change_password");
+                            }
+
                             MydApplication.getInstance().getPrefManger().setUserProfile(user);
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();

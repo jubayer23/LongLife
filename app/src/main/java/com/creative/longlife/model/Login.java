@@ -20,7 +20,7 @@ public class Login implements Serializable
     private User user;
     @SerializedName("login_type")
     @Expose
-    private User login_type;
+    private String login_type;
     private final static long serialVersionUID = 4275859057067326939L;
 
     public Integer getSuccess() {
@@ -39,12 +39,11 @@ public class Login implements Serializable
         this.user = user;
     }
 
-
-    public User getLogin_type() {
+    public String getLogin_type() {
         return login_type;
     }
 
-    public void setLogin_type(User login_type) {
+    public void setLogin_type(String login_type) {
         this.login_type = login_type;
     }
 }

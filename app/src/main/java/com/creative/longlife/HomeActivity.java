@@ -20,6 +20,7 @@ import com.creative.longlife.fragment.FragmentAllCategory;
 import com.creative.longlife.fragment.FragmentServiceList;
 import com.creative.longlife.fragment.FragmentUserCategory;
 import com.creative.longlife.model.Category;
+import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -77,6 +78,16 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             // The Activity IS being re-created so we don't need to instantiate the Fragment or add it,
             // but if we need a reference to it, we can use the tag we passed to .replace
             fragmentUserCategory = (FragmentUserCategory) getSupportFragmentManager().findFragmentByTag(TAG_USER_CATEGORY_FRAGMENT);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        User user = MydApplication.getInstance().getPrefManger().getUserProfile();
+        if(user.getLogin_type()!=null && !user.getLogin_type().isEmpty()){
+            showDialogForChangePassword();
         }
     }
 
@@ -270,5 +281,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             fragmentUserCategory.filterSearch(newText);
         }
         return true;
+    }
+
+
+    private void showDialogForChangePassword(){
+
     }
 }

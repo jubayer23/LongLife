@@ -38,6 +38,8 @@ public class User implements Serializable
     private String dob;
     private final static long serialVersionUID = -664237076134602702L;
 
+    private String login_type;
+
     public User(String id, String name, String email, String gdCode, String stateName, String localGovtName, String sex, String dob) {
         this.id = id;
         this.name = name;
@@ -113,4 +115,11 @@ public class User implements Serializable
         this.dob = dob;
     }
 
+    public String getLogin_type() {
+        return login_type;
+    }
+
+    public void setLogin_type(String login_type) {
+        this.login_type = login_type;
+    }
 }
