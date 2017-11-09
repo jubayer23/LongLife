@@ -15,6 +15,8 @@ public class GlobalAppAccess {
     public static final String URL_SERVICE = BASE_URL + "servicelist.php";
     public static final String URL_STATES = BASE_URL + "nigerian_states.php";
     public static final String URL_LOCAL_GOVT = BASE_URL + "local_govt.php";
+    public static final String URL_FORGOT_PASSWORD = BASE_URL + "forgotPassword.php";
+    public static final String URL_CHANGE_PASSWORD = BASE_URL + "changePassword.php";
 
 
 

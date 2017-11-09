@@ -3,6 +3,7 @@ package com.creative.longlife;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.Utility.CommonMethods;
 import com.creative.longlife.Utility.DeviceInfoUtils;
+import com.creative.longlife.Utility.EmailConnector;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
@@ -27,7 +29,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     // UI references.
     private Button btn_submit;
     private EditText ed_email, ed_password;
-    private TextView tv_register_now;
+    private TextView tv_register_now,tv_reset_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         btn_submit.setOnClickListener(this);
         tv_register_now = (TextView) findViewById(R.id.tv_register_now);
         tv_register_now.setOnClickListener(this);
+        tv_reset_password = (TextView) findViewById(R.id.tv_reset_password);
+        tv_reset_password.setOnClickListener(this);
     }
 
     private void initializeCacheValue() {
@@ -97,6 +101,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         if(id == R.id.tv_register_now){
             startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
+        }
+
+        if(id == R.id.tv_reset_password){
+
+            EmailConnector emailConnector = new EmailConnector(LoginActivity.this);
+            emailConnector.showEmailDialog();
+
         }
     }
 
@@ -144,6 +155,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("DEBUG",response);
 
                         dismissProgressDialog();
 

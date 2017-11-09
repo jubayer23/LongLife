@@ -66,6 +66,15 @@
                 android:textColorHint="@color/gray_light" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_reset_password"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="@color/gray_light"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
+            android:text="Reset Password"/>
+
 
         <Button
             android:id="@+id/btn_submit"
