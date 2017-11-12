@@ -1,14 +1,18 @@
 package com.creative.longlife;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -51,6 +55,9 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     private static final String KEY_SELECT_STATES = "Select States";
     private static final String KEY_SELECT_LOCAL_GOVT = "Select Local Govt";
 
+    private String state_name = "";
+    private String local_govt_name = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +98,12 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         list_location_states.add(KEY_SELECT_STATES);
         spAdapterStates = new ArrayAdapter<String>
                 (this, R.layout.spinner_item, list_location_states);
-        sp_location_states.setAdapter(spAdapterStates);
+        //sp_location_states.setAdapter(spAdapterStates);
 
         list_location_local_govt.add(KEY_SELECT_LOCAL_GOVT);
         spAdapterLocalGovt = new ArrayAdapter<String>
                 (this, R.layout.spinner_item, list_location_local_govt);
-        sp_location_local_govt.setAdapter(spAdapterLocalGovt);
+       // sp_location_local_govt.setAdapter(spAdapterLocalGovt);
     }
 
     @Override
@@ -110,16 +117,16 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             String email = ed_email.getText().toString();
             String password = ed_password.getText().toString();
             String gd_code = ed_gd_code.getText().toString();
-            String state_name = sp_location_states.getSelectedItem().toString();
-            String local_govt_name = sp_location_local_govt.getSelectedItem().toString();
+            //String state_name = sp_location_states.getSelectedItem().toString();
+            //String local_govt_name = sp_location_local_govt.getSelectedItem().toString();
 
             if (isValidCredentialsProvided(name, email, password)) {
-                if (state_name.equals(KEY_SELECT_STATES)) {
-                    Toast.makeText(RegistrationActivity.this, "You must select a State!", Toast.LENGTH_LONG).show();
+                if (state_name.equals(KEY_SELECT_STATES) || state_name.isEmpty()) {
+                    Toast.makeText(RegistrationActivity.this, "You must select region!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (local_govt_name.equals(KEY_SELECT_LOCAL_GOVT)) {
-                    Toast.makeText(RegistrationActivity.this, "You must select a Local Govt!", Toast.LENGTH_LONG).show();
+                if (local_govt_name.equals(KEY_SELECT_LOCAL_GOVT) || local_govt_name.isEmpty()) {
+                    Toast.makeText(RegistrationActivity.this, "You must select region!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -179,6 +186,67 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         return true;
     }
 
+
+    Dialog dialog_start;
+
+    public void dialogShowRegion(View view) {
+
+        dialog_start = new Dialog(RegistrationActivity.this,
+                android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        dialog_start.setCancelable(true);
+        dialog_start.setContentView(R.layout.dialog_show_region);
+
+        final Spinner sp_location_states = (Spinner) dialog_start.findViewById(R.id.sp_location_states);
+        final Spinner sp_location_local_govt = (Spinner) dialog_start.findViewById(R.id.sp_location_local_govt);
+        Button btn_submit = (Button) dialog_start.findViewById(R.id.btn_send);
+        ImageView img_close = (ImageView) dialog_start.findViewById(R.id.img_close);
+
+
+        sp_location_states.setAdapter(spAdapterStates);
+        sp_location_local_govt.setAdapter(spAdapterLocalGovt);
+
+
+        sp_location_states.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String state_name = adapterView.getItemAtPosition(i).toString();
+
+                if (!state_name.equals(KEY_SELECT_STATES)) {
+                    // do your stuff
+                    sendRequestToGetLocalGovt(GlobalAppAccess.URL_LOCAL_GOVT, state_name);
+                } else {
+                    updateSpinner(R.id.sp_location_local_govt, ACTION_CLEAR_DATA);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                state_name = sp_location_states.getSelectedItem().toString();
+                local_govt_name = sp_location_local_govt.getSelectedItem().toString();
+
+                dialog_start.dismiss();
+            }
+        });
+
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_start.dismiss();
+            }
+        });
+
+
+        dialog_start.show();
+    }
+
     public void sendRequestForRegister(String url, final String name, final String email, String password,
                                        String gd_code, final String state_name,
                                        final String local_govt_name, final String sex) {
@@ -207,7 +275,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                             if (jspJsonObject.getInt("success") == 1) {
 
                                 String user_id = jspJsonObject.getString("user_id");
-                                User user = new User(user_id, name, email,finalGd_code,state_name,local_govt_name,sex,"12/13/2017");
+                                User user = new User(user_id, name, email, finalGd_code, state_name, local_govt_name, sex, "12/13/2017");
                                 MydApplication.getInstance().getPrefManger().setUserProfile(user);
                                 startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
                                 finish();

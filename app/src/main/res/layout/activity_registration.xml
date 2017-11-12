@@ -18,8 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
 
@@ -128,6 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="12dp"
+                android:visibility="gone"
                 android:background="@drawable/square_edittext">
 
                 <Spinner
@@ -151,6 +151,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/square_edittext">
 
@@ -172,6 +173,16 @@
                     android:src="@drawable/spinner_arrow" />
             </RelativeLayout>
 
+            <Button
+                android:onClick="dialogShowRegion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/square_edittext"
+                android:text="Region"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
             <RadioGroup
                 android:id="@+id/rd_sex"
                 android:layout_width="fill_parent"
@@ -185,6 +196,7 @@
                     android:id="@+id/rd_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Male"
                     android:textColor="@color/white" />
 

@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class EmailConnector {
 
         final EditText ed_email_address = (EditText) dialog_start.findViewById(R.id.ed_email_address);
         Button btn_send = (Button) dialog_start.findViewById(R.id.btn_send);
+        ImageView img_close = (ImageView) dialog_start.findViewById(R.id.img_close);
 
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +66,13 @@ public class EmailConnector {
                 }else{
                     ed_email_address.setError("Give valid email address!!");
                 }
+            }
+        });
+
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_start.dismiss();
             }
         });
 

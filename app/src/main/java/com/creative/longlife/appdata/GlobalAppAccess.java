@@ -19,6 +19,9 @@ public class GlobalAppAccess {
     public static final String URL_CHANGE_PASSWORD = BASE_URL + "changePassword.php";
 
 
+    public static final  int SUCCESS = 1;
+    public static  final  int ERROR = 0;
+
 
     public static final String  CAT_FAVOURITE = "Favourite";
     public static final String  CAT_FAVOURITE_ID = "-100";
