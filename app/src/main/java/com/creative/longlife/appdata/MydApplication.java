@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley;
 import com.creative.longlife.sharedprefs.PrefManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.Gson;
+import com.onesignal.OneSignal;
 
 
 public class MydApplication extends Application {
@@ -37,6 +38,11 @@ public class MydApplication extends Application {
         pref = new PrefManager(this);
 
         gson = new Gson();
+
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
     }
 
     public static synchronized MydApplication getInstance() {

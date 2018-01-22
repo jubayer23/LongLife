@@ -140,6 +140,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
             case R.id.nav_profile:
+                Intent intent2 = new Intent(HomeActivity.this, Profile.class);
+                startActivity(intent2);
                 //Do some thing here
                 // add navigation drawer item onclick method here
                 break;

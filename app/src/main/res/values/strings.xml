@@ -7,4 +7,5 @@
     <string name="activity_registration">Registration</string>
     <string name="activity_service_detalis">Details</string>
     <string name="activity_all_categories">Categories</string>
+    <string name="activity_profile">Profile</string>
 </resources>
