@@ -25,6 +25,7 @@ import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.eventListener.RecyclerItemClickListener;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
+import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -79,10 +80,12 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
 
         initRecyclerViewClickListener();
 
+
+
         //load all event from database and show them in the UI
         //initializeUi();
 
-        changeUiForNoCategory(false);
+        changeUiForNoCategory();
 
         return view;
     }
@@ -105,6 +108,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
 
         tv_choose_category = (TextView) view.findViewById(R.id.tv_choose_category);
 
+
         fab_add_more_categories = (FloatingActionButton) view.findViewById(R.id.fab_add_more_category);
         fab_add_more_categories.setOnClickListener(this);
 
@@ -117,14 +121,12 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
             categories.add(GlobalAppAccess.default_category_EMR);
     }
 
-    private void changeUiForNoCategory(boolean isNocategory) {
+    private void changeUiForNoCategory() {
 
-        if (isNocategory) {
+        if (categories.size() <= 2) {
             ll_no_category_warning_container.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
         } else {
             ll_no_category_warning_container.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
         }
 
     }
@@ -223,11 +225,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
         categories.clear();
         categories.addAll(HomeActivity.selected_categories);
 
-        if (categories.size() > 0) {
-            changeUiForNoCategory(false);
-        } else {
-            changeUiForNoCategory(true);
-        }
+        changeUiForNoCategory();
 
         userCategoryAdapter.notifyDataSetChanged();
     }

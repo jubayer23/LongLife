@@ -4,12 +4,49 @@
     android:layout_height="match_parent">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:scrollbars="vertical" />
+    <LinearLayout
+        android:id="@+id/ll_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Your location : "/>
+            <TextView
+                android:id="@+id/tv_your_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_marginRight="5dp"
+                android:text="Sylhet"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select categories of health and wellness applicable to you"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_rounded_blue_border_transparent"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_no_category_warning_container"

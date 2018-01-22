@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/background"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:scrollbars="vertical" />
 
     <LinearLayout
         android:id="@+id/ll_no_category_warning_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
+        android:layout_below="@id/recycler_view"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:background="@drawable/background_rounded_blue_border_transparent"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You haven't selected any category yet!"
-            style="@style/subContentWarning"/>
-
+            android:text="Help Box"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
         <TextView
-            android:id="@+id/tv_choose_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/editableContentText"
-            android:text="Choose category"/>
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:text="LongLife is the collection of Wellness and Health Services essential for Longer and Healthier Lives”. “Unleash LongLife for You”. “Click on the “Orange Button” by your bottom right, to select categories that applies to you"/>
 
     </LinearLayout>
 

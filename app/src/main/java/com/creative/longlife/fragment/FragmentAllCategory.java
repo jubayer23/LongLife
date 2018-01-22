@@ -24,6 +24,7 @@ import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
+import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -51,9 +52,9 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
     private FloatingActionButton fabTopToTheList;
 
-    LinearLayout ll_no_category_warning_container;
+    LinearLayout ll_no_category_warning_container,ll_main_container;
 
-    TextView tv_choose_category;
+    TextView tv_choose_category,tv_your_location;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
         changeUiForNoCategory(false);
 
+        initUserLocation();
+
         return view;
     }
 
@@ -96,9 +99,11 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
         // gridView = (GridView) view.findViewById(R.id.gridview_latestmovie);
         ll_no_category_warning_container = (LinearLayout) view.findViewById(R.id.ll_no_category_warning_container);
+        ll_main_container = (LinearLayout) view.findViewById(R.id.ll_main_container);
 
 
         tv_choose_category = (TextView) view.findViewById(R.id.tv_choose_category);
+        tv_your_location = (TextView) view.findViewById(R.id.tv_your_location);
 
         fabTopToTheList = (FloatingActionButton) view.findViewById(R.id.fabTopToTheList);
         fabTopToTheList.setVisibility(View.GONE);
@@ -119,12 +124,16 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
         if (isNocategory) {
             ll_no_category_warning_container.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            ll_main_container.setVisibility(View.GONE);
         } else {
             ll_no_category_warning_container.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            ll_main_container.setVisibility(View.VISIBLE);
         }
 
+    }
+    private void initUserLocation(){
+        User user = MydApplication.getInstance().getPrefManger().getUserProfile();
+        tv_your_location.setText(user.getStateName());
     }
 
 
