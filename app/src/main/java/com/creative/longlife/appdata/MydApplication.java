@@ -7,6 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.creative.longlife.service.ExampleNotificationOpenedHandler;
+import com.creative.longlife.service.ExampleNotificationReceivedHandler;
 import com.creative.longlife.sharedprefs.PrefManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.Gson;
@@ -41,6 +43,8 @@ public class MydApplication extends Application {
 
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler(this))
+                .setNotificationReceivedHandler(new ExampleNotificationReceivedHandler())
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
     }

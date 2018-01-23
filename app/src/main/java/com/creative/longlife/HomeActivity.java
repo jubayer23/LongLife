@@ -33,6 +33,7 @@ import com.creative.longlife.fragment.FragmentAllCategory;
 import com.creative.longlife.fragment.FragmentServiceList;
 import com.creative.longlife.fragment.FragmentUserCategory;
 import com.creative.longlife.model.Category;
+import com.creative.longlife.model.Notification;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
@@ -152,6 +153,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_notification:
                 //Do some thing here
                 // add navigation drawer item onclick method here
+                Intent intent3 = new Intent(HomeActivity.this, NotificationActivity.class);
+                intent3.putExtra(GlobalAppAccess.KEY_CALL_FROM,GlobalAppAccess.TAG_HOME_ACTIVITY);
+                startActivity(intent3);
                 break;
             case R.id.nav_setting:
                 //Do some thing here

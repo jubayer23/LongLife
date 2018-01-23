@@ -14,6 +14,8 @@ import android.widget.EditText;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -151,4 +153,9 @@ public class CommonMethods {
             return false;
         }
     }
+    public static String formatDate(Date date, String format){
+        DateFormat dateFormat = new SimpleDateFormat(format);
+        return  dateFormat.format(date);
+    }
+
 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.creative.longlife.BuildConfig;
+import com.creative.longlife.model.Notification;
 import com.creative.longlife.model.Service;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
@@ -44,6 +45,7 @@ public class PrefManager {
 
     private static final String KEY_RECEIVED_CARD_OBJ = "received_card_obj";
     private static final String KEY_FAV_SERVICE = "fav_service";
+    private static final String KEY_NOTIFICATION = "notification";
     private static final String KEY_EMAIL_CACHE = "key_email_cache";
 
     public PrefManager(Context context) {
@@ -122,5 +124,42 @@ public class PrefManager {
 
         return productFromShared;
     }
+
+
+
+    public void setNotifications(List<Notification> obj) {
+        editor = pref.edit();
+
+        editor.putString(KEY_NOTIFICATION, GSON.toJson(obj));
+
+        // commit changes
+        editor.commit();
+    }
+
+    public void setNotifications(String obj) {
+        editor = pref.edit();
+
+        editor.putString(KEY_NOTIFICATION, obj);
+
+        // commit changes
+        editor.commit();
+    }
+
+
+    public List<Notification> getNotifications() {
+
+        List<Notification> productFromShared = new ArrayList<>();
+
+        String gson = pref.getString(KEY_NOTIFICATION, "");
+
+        if (gson.isEmpty()) return productFromShared;
+
+        Type type = new TypeToken<List<Notification>>() {
+        }.getType();
+        productFromShared = GSON.fromJson(gson, type);
+
+        return productFromShared;
+    }
+
 
 }

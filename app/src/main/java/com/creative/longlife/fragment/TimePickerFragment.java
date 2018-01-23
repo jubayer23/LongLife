@@ -1,6 +1,5 @@
-package com.shaficonsultancy.mydetails.fragment;
+package com.creative.longlife.fragment;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
