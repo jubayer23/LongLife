@@ -5,6 +5,8 @@
 
     >
 
+    <include layout="@layout/toolbar" />
+
 
     <LinearLayout
         android:id="@+id/ll_form"

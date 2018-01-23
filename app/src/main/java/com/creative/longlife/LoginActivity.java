@@ -47,6 +47,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
          * */
         setContentView(R.layout.activity_login);
 
+        initToolbar();
+
         init();
 
         initializeCacheValue();
@@ -87,7 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
         if (id == R.id.btn_submit) {
-           // if (isValidCredentialsProvided()) {
+            //if (isValidCredentialsProvided()) {
 
                 CommonMethods.hideKeyboardForcely(this, ed_email);
                 CommonMethods.hideKeyboardForcely(this, ed_password);
@@ -95,7 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 saveCache(ed_email.getText().toString());
 
                 sendRequestForLogin(GlobalAppAccess.URL_LOGIN, ed_email.getText().toString(), ed_password.getText().toString());
-         //  }
+          // }
         }
 
 

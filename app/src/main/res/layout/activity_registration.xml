@@ -21,6 +21,17 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ll_form"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:text="SIGNUP"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -122,13 +134,73 @@
                     android:textColorHint="@color/gray_light" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/contact" />
+
+                <EditText
+                    android:id="@+id/ed_year_of_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:hint="Year of birth"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_select_region"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/contact" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="dialogShowRegion2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_region"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/gray_light"
+                        android:text="Select region" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/gray_light"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="12dp"
-                android:visibility="gone"
-                android:background="@drawable/square_edittext">
+                android:background="@drawable/square_edittext"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/sp_location_states"
@@ -151,9 +223,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:visibility="gone"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/square_edittext">
+                android:background="@drawable/square_edittext"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/sp_location_local_govt"
@@ -174,12 +246,13 @@
             </RelativeLayout>
 
             <Button
-                android:onClick="dialogShowRegion"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/square_edittext"
+                android:onClick="dialogShowRegion2"
                 android:text="Region"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -215,7 +288,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:text="Register" />
+                android:text="Get Started" />
         </LinearLayout>
     </ScrollView>
 
