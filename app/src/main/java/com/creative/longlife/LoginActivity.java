@@ -42,10 +42,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             finish();
             return;
         }
+
+
         /**
          * If User is not logged-in proceed with the login form
          * */
         setContentView(R.layout.activity_login);
+
+        initToolbar();
 
         init();
 
@@ -87,7 +91,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
         if (id == R.id.btn_submit) {
-            if (isValidCredentialsProvided()) {
+            //if (isValidCredentialsProvided()) {
 
                 CommonMethods.hideKeyboardForcely(this, ed_email);
                 CommonMethods.hideKeyboardForcely(this, ed_password);
@@ -95,7 +99,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 saveCache(ed_email.getText().toString());
 
                 sendRequestForLogin(GlobalAppAccess.URL_LOGIN, ed_email.getText().toString(), ed_password.getText().toString());
-           }
+          // }
         }
 
 
@@ -155,7 +159,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("DEBUG",response);
+                        //Log.d("DEBUG",response);
 
                         dismissProgressDialog();
 
