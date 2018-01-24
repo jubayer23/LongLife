@@ -149,6 +149,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_reminder:
                 //Do some thing here
                 // add navigation drawer item onclick method here
+                Intent intent4 = new Intent(HomeActivity.this, ReminderActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.nav_notification:
                 //Do some thing here

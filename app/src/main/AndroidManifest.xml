@@ -64,7 +64,8 @@
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />
 
-        <activity android:name=".ReminderActivity"></activity>
+        <activity android:name=".ReminderActivity"
+            android:label="@string/activity_reminder"></activity>
 
         <receiver android:name=".receiver.AlarmReceiver" android:process=":remote" />
     </application>

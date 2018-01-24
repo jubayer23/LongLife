@@ -20,8 +20,11 @@ import android.widget.Toast;
 import com.creative.longlife.R;
 import com.creative.longlife.ReminderActivity;
 import com.creative.longlife.appdata.GlobalAppAccess;
+import com.creative.longlife.appdata.MydApplication;
+import com.creative.longlife.model.Reminder;
 
 import java.util.Collections;
+import java.util.List;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -33,6 +36,21 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         String title = intent.getStringExtra("title");
         String message = intent.getStringExtra("body");
+        String time = intent.getStringExtra("time");
+
+
+        List<Reminder> reminders = MydApplication.getInstance().getPrefManger().getReminders();
+        int count = 0;
+        for(Reminder reminder: reminders){
+            if(reminder.getTime().equals(time)){
+                reminders.remove(count);
+                break;
+            }
+            count++;
+        }
+        MydApplication.getInstance().getPrefManger().setReminders(reminders);
+
+
         // notification icon
         final int icon = R.mipmap.ic_launcher;
 

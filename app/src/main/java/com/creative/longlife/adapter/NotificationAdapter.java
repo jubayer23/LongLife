@@ -29,6 +29,7 @@ import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.fragment.DatePickerFragment;
 import com.creative.longlife.fragment.TimePickerFragment;
 import com.creative.longlife.model.Notification;
+import com.creative.longlife.model.Reminder;
 import com.creative.longlife.receiver.AlarmReceiver;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -125,7 +126,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         dialog_start.setContentView(R.layout.dialog_set_reminder);
 
         final TextView tv_set_date = (TextView) dialog_start.findViewById(R.id.tv_set_date);
-        TextView tv_set_time = (TextView) dialog_start.findViewById(R.id.tv_set_time);
+        final TextView tv_set_time = (TextView) dialog_start.findViewById(R.id.tv_set_time);
         Button btn_submit = (Button) dialog_start.findViewById(R.id.btn_submit);
 
         final Calendar calendar = Calendar.getInstance();
@@ -159,7 +160,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 calendar.set(Calendar.SECOND, 0);
 
                 Date date = calendar.getTime();
-                tv_set_date.setText(CommonMethods.formatDate(date, "HH:mm:ss"));
+                tv_set_time.setText(CommonMethods.formatDate(date, "HH:mm:ss"));
             }
         };
 
@@ -198,10 +199,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void setAlarm(Calendar targetCal,String title, String body){
 
+        Date date = targetCal.getTime();
+        String time = CommonMethods.formatDate(date, "yyyy-MM-dd HH:mm:ss");
+        Reminder reminder = new Reminder(title,body,time);
+
+        List<Reminder> reminders = MydApplication.getInstance().getPrefManger().getReminders();
+        reminders.add(reminder);
+        MydApplication.getInstance().getPrefManger().setReminders(reminders);
+
 
         Intent intent = new Intent(activity, AlarmReceiver.class);
         intent.putExtra("title",title);
         intent.putExtra("body",body);
+        intent.putExtra("time",time);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 101, intent, 0);
         AlarmManager alarmManager = (AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
