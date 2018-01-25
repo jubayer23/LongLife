@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.creative.longlife.adapter.ReminderAdapter;
+import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Notification;
 import com.creative.longlife.model.Reminder;
@@ -24,6 +26,7 @@ public class ReminderActivity extends BaseActivity {
 
     TextView tv_no_notification;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,8 @@ public class ReminderActivity extends BaseActivity {
         initAdapter();
 
         loadData();
+
+
     }
 
     private void init() {
@@ -45,8 +50,9 @@ public class ReminderActivity extends BaseActivity {
 
     private void initAdapter() {
 
+       String alarm_fire_time = getIntent().getStringExtra("time");
 
-        reminderAdapter = new ReminderAdapter(this, reminders);
+        reminderAdapter = new ReminderAdapter(this, reminders,alarm_fire_time);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -57,6 +63,7 @@ public class ReminderActivity extends BaseActivity {
 
     private void loadData(){
         List<Reminder> tempReminders = MydApplication.getInstance().getPrefManger().getReminders();
+        Log.d("DEBUG",String.valueOf(tempReminders.size()));
         Collections.sort(tempReminders, new Reminder.timeComparatorDesc());
 
         reminders.addAll(tempReminders);
@@ -72,4 +79,24 @@ public class ReminderActivity extends BaseActivity {
         reminderAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onBackPressed() {
+
+       String call_from = getIntent().getStringExtra(GlobalAppAccess.KEY_CALL_FROM);
+        if(call_from != null && call_from.equals(GlobalAppAccess.TAG_ALARM_RECEIVER)){
+            String time = getIntent().getStringExtra("time");
+
+            int count = 0;
+            for(Reminder reminder: reminders){
+                if(reminder.getTime().equals(time)){
+                    reminders.remove(count);
+                    break;
+                }
+                count++;
+            }
+            MydApplication.getInstance().getPrefManger().setReminders(reminders);
+
+        }
+        super.onBackPressed();
+    }
 }

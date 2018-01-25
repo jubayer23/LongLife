@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -33,6 +34,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
 
     private PopupWindow popupwindow_obj;
 
+    private String alarm_fire_time;
+
     private int lastPosition = -1;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -40,6 +43,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
         TextView tv_sub_title;
         TextView tv_day;
         TextView tv_month;
+        LinearLayout ll_body;
 
         public MyViewHolder(View view) {
             super(view);
@@ -47,14 +51,16 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
             tv_sub_title = (TextView) view.findViewById(R.id.tv_sub_title);
             tv_day = (TextView) view.findViewById(R.id.tv_day);
             tv_month = (TextView) view.findViewById(R.id.tv_month);
+            ll_body = (LinearLayout) view.findViewById(R.id.ll_body);
         }
     }
 
 
-    public ReminderAdapter(Activity activity, List<Reminder> attendees) {
+    public ReminderAdapter(Activity activity, List<Reminder> attendees, String alarm_fire_time) {
         this.activity = activity;
         this.Displayedplaces = attendees;
         this.Originalplaces = attendees;
+        this.alarm_fire_time = alarm_fire_time;
     }
 
     @Override
@@ -81,6 +87,12 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
             holder.tv_month.setText(month);
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+
+        if(alarm_fire_time != null && !alarm_fire_time.isEmpty() && event.getTime().equals(alarm_fire_time)){
+            holder.ll_body.setBackgroundResource(R.color.green_light);
+        }else{
+            holder.ll_body.setBackgroundResource(R.color.white);
         }
 
 

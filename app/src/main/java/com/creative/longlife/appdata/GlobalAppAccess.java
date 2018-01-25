@@ -37,6 +37,7 @@ public class GlobalAppAccess {
     public static final String KEY_CALL_FROM = "call_from";
     public static final String TAG_NOTIFICATION = "notification";
     public static final String TAG_HOME_ACTIVITY = "home_activity";
+    public static final String TAG_ALARM_RECEIVER = "alarm_receiver";
 
 
     // id to handle the notification in the notification tray

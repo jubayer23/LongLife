@@ -23,7 +23,7 @@
         android:id="@+id/tv_no_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You do not have any pending delivery. If any delivery assigned to you than you will get notification."
+        android:text="You do not have any notification."
         android:textSize="18sp"
         android:layout_centerInParent="true"
         android:textColor="@color/orange"

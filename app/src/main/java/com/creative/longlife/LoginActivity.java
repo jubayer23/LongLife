@@ -52,6 +52,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         init();
 
         initializeCacheValue();
+
+        String call_from = getIntent().getStringExtra(GlobalAppAccess.KEY_CALL_FROM);
+        if(call_from != null && call_from.equals(GlobalAppAccess.TAG_NOTIFICATION)){
+            AlertDialogForAnything.showAlertDialogWhenComplte(this,"Notification","Please login to see the latest notification",true);
+        }
     }
 
     private void init() {

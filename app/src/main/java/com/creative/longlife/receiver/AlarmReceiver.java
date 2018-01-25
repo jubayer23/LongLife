@@ -15,6 +15,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.creative.longlife.R;
@@ -39,22 +40,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         String time = intent.getStringExtra("time");
 
 
-        List<Reminder> reminders = MydApplication.getInstance().getPrefManger().getReminders();
-        int count = 0;
-        for(Reminder reminder: reminders){
-            if(reminder.getTime().equals(time)){
-                reminders.remove(count);
-                break;
-            }
-            count++;
-        }
-        MydApplication.getInstance().getPrefManger().setReminders(reminders);
-
-
         // notification icon
         final int icon = R.mipmap.ic_launcher;
 
         Intent intent1 = new Intent(context, ReminderActivity.class);
+        intent1.putExtra(GlobalAppAccess.KEY_CALL_FROM,GlobalAppAccess.TAG_ALARM_RECEIVER);
+        intent1.putExtra("time",time);
         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
