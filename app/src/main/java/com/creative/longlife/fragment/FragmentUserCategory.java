@@ -195,6 +195,8 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
                             userCategoryAdapter.notifyDataSetChanged();
                         }
 
+                        changeUiForNoCategory();
+
 
                     }
                 }, new com.android.volley.Response.ErrorListener() {
@@ -204,7 +206,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
                 ((HomeActivity) getActivity()).dismissProgressDialog();
                 //progressBar.setVisibility(View.GONE);
                 AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(),
-                        "ERROR",
+                        "Error",
                         "Something went wrong!!",
                         false);
 
