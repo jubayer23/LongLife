@@ -51,7 +51,8 @@ public class ExampleNotificationOpenedHandler implements OneSignal.NotificationO
          * If User is already logged-in then redirect user to the Notification Page
          * */
         if (MydApplication.getInstance().getPrefManger().getUserProfile() != null) {
-            clearNotifications(application);
+            //clearNotifications(application);
+            OneSignal.clearOneSignalNotifications();
             Intent intent = new Intent(application, NotificationActivity.class);
             intent.putExtra(GlobalAppAccess.KEY_CALL_FROM,GlobalAppAccess.TAG_NOTIFICATION);
             application.startActivity(intent);
