@@ -44,6 +44,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
         TextView tv_day;
         TextView tv_month;
         LinearLayout ll_body;
+        LinearLayout ll_container;
 
         public MyViewHolder(View view) {
             super(view);
@@ -52,6 +53,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
             tv_day = (TextView) view.findViewById(R.id.tv_day);
             tv_month = (TextView) view.findViewById(R.id.tv_month);
             ll_body = (LinearLayout) view.findViewById(R.id.ll_body);
+            ll_container = (LinearLayout) view.findViewById(R.id.ll_container);
         }
     }
 
@@ -90,9 +92,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
         }
 
         if(alarm_fire_time != null && !alarm_fire_time.isEmpty() && event.getTime().equals(alarm_fire_time)){
-            holder.ll_body.setBackgroundResource(R.color.green_light);
+            holder.ll_container.setBackgroundResource(R.color.green_light);
         }else{
-            holder.ll_body.setBackgroundResource(R.color.white);
+            holder.ll_container.setBackgroundResource(R.color.white);
         }
 
 
