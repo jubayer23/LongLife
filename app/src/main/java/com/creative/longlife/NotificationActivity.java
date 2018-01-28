@@ -1,5 +1,6 @@
 package com.creative.longlife;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,8 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.creative.longlife.adapter.NotificationAdapter;
+import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Notification;
+import com.creative.longlife.model.Reminder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +27,8 @@ public class NotificationActivity extends BaseActivity {
 
     TextView tv_no_notification;
 
+    private int newNotificationCounter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,8 @@ public class NotificationActivity extends BaseActivity {
         initToolbar(true);
         
         init();
+
+        checkNewNotificationAndResetCounter();
 
         initAdapter();
 
@@ -43,10 +50,15 @@ public class NotificationActivity extends BaseActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
     }
 
+    private void checkNewNotificationAndResetCounter(){
+        newNotificationCounter = MydApplication.getInstance().getPrefManger().getNewNotificationCounter();
+        MydApplication.getInstance().getPrefManger().setNewNotificationCounter(0);
+    }
+
     private void initAdapter() {
 
 
-        notificationAdapter = new NotificationAdapter(this, notifications);
+        notificationAdapter = new NotificationAdapter(this, notifications,newNotificationCounter);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -70,6 +82,19 @@ public class NotificationActivity extends BaseActivity {
         }
 
         notificationAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        String call_from = getIntent().getStringExtra(GlobalAppAccess.KEY_CALL_FROM);
+        if(call_from != null && call_from.equals(GlobalAppAccess.TAG_NOTIFICATION)){
+            startActivity(new Intent(NotificationActivity.this, HomeActivity.class));
+            finish();
+
+        }else{
+            super.onBackPressed();
+        }
     }
 
 }

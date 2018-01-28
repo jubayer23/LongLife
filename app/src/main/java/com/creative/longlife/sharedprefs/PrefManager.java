@@ -49,6 +49,7 @@ public class PrefManager {
     private static final String KEY_NOTIFICATION = "notification";
     private static final String KEY_REMINDER = "reminder";
     private static final String KEY_EMAIL_CACHE = "key_email_cache";
+    private static final String KEY_NOTIFICATION_COUNTER = "key_notification_counter";
 
     public PrefManager(Context context) {
         this._context = context;
@@ -66,6 +67,17 @@ public class PrefManager {
     }
     public String getEmailCache() {
         return pref.getString(KEY_EMAIL_CACHE,"");
+    }
+    public void setNewNotificationCounter(int obj) {
+        editor = pref.edit();
+
+        editor.putInt(KEY_NOTIFICATION_COUNTER, obj);
+
+        // commit changes
+        editor.commit();
+    }
+    public int getNewNotificationCounter() {
+        return pref.getInt(KEY_NOTIFICATION_COUNTER,0);
     }
     public void setUserProfile(User obj) {
         editor = pref.edit();

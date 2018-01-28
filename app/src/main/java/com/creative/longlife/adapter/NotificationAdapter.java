@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -50,6 +51,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private PopupWindow popupwindow_obj;
 
+    private int newNotificationCounter;
+
     private int lastPosition = -1;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -57,6 +60,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         TextView tv_sub_title;
         TextView tv_add_reminder;
         SimpleDraweeView img;
+        ImageView img_new_tag;
 
         public MyViewHolder(View view) {
             super(view);
@@ -64,14 +68,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             tv_sub_title = (TextView) view.findViewById(R.id.tv_sub_title);
             tv_add_reminder = (TextView) view.findViewById(R.id.tv_add_reminder);
             img = (SimpleDraweeView) view.findViewById(R.id.img);
+            img_new_tag = (ImageView) view.findViewById(R.id.img_new_tag);
+
         }
     }
 
 
-    public NotificationAdapter(Activity activity, List<Notification> attendees) {
+    public NotificationAdapter(Activity activity, List<Notification> attendees, int newNotificaionCounter) {
         this.activity = activity;
         this.Displayedplaces = attendees;
         this.Originalplaces = attendees;
+        this.newNotificationCounter = newNotificaionCounter;
     }
 
     @Override
@@ -99,6 +106,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 showReminderDialog(event.getTitle(),event.getBody());
             }
         });
+
+        if(position < newNotificationCounter){
+            holder.img_new_tag.setVisibility(View.VISIBLE);
+        }else{
+            holder.img_new_tag.setVisibility(View.GONE);
+        }
 
         if (position > lastPosition) {
             lastPosition = position;

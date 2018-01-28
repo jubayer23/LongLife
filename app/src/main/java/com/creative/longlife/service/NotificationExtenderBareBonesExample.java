@@ -47,6 +47,10 @@ public class NotificationExtenderBareBonesExample extends NotificationExtenderSe
         notifications.add(notification);
         MydApplication.getInstance().getPrefManger().setNotifications(notifications);
 
+        int newNotificationCounter = MydApplication.getInstance().getPrefManger().getNewNotificationCounter();
+        newNotificationCounter = newNotificationCounter + 1;
+        MydApplication.getInstance().getPrefManger().setNewNotificationCounter(newNotificationCounter);
+
         OverrideSettings overrideSettings = new OverrideSettings();
         overrideSettings.extender = new NotificationCompat.Extender() {
             @Override
