@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/blue_deep_extreme_2"
     android:orientation="vertical"
-    tools:context="com.creative.longlife.Profile">
+    tools:context="com.creative.longlife.ProfileActivity">
 
     <include layout="@layout/toolbar" />
 

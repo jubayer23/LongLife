@@ -43,7 +43,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/activity_service_detalis" />
         <activity
-            android:name=".Profile"
+            android:name=".ProfileActivity"
             android:label="@string/activity_profile" />
 
         <service

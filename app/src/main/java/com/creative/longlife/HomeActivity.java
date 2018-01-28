@@ -33,7 +33,6 @@ import com.creative.longlife.fragment.FragmentAllCategory;
 import com.creative.longlife.fragment.FragmentServiceList;
 import com.creative.longlife.fragment.FragmentUserCategory;
 import com.creative.longlife.model.Category;
-import com.creative.longlife.model.Notification;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
@@ -141,7 +140,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
             case R.id.nav_profile:
-                Intent intent2 = new Intent(HomeActivity.this, Profile.class);
+                Intent intent2 = new Intent(HomeActivity.this, ProfileActivity.class);
                 startActivity(intent2);
                 //Do some thing here
                 // add navigation drawer item onclick method here
