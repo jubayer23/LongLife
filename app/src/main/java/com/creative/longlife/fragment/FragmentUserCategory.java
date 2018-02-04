@@ -25,7 +25,6 @@ import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.eventListener.RecyclerItemClickListener;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
-import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -94,7 +93,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sendRequestToGetPlaceList(GlobalAppAccess.URL_USER_CATEGORYLIST);
+        sendRequestToGetUserCategoryList(GlobalAppAccess.URL_USER_CATEGORYLIST);
     }
 
 
@@ -167,7 +166,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
         );
     }
 
-    public void sendRequestToGetPlaceList(String url) {
+    public void sendRequestToGetUserCategoryList(String url) {
 
 
         url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();

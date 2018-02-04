@@ -247,7 +247,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         url = url + "?name=" + name;
 
         if(!state_name.isEmpty() && !local_govt_name.isEmpty()){
-            url = url + "&stateName=" + state_name + "&localGovtName=" + local_govt_name;
+            url = url + "&state=" + state_name + "&local_govt=" + local_govt_name;
         }
         // TODO Auto-generated method stub
         showProgressDialog("Loading..", true, false);

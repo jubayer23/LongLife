@@ -27,31 +27,49 @@ public class Service implements Parcelable,Serializable
     @SerializedName("price")
     @Expose
     private String price;
+    @SerializedName("priority")
+    @Expose
+    private String priority;
     @SerializedName("company")
     @Expose
     private Company company;
-    public final static Parcelable.Creator<Service> CREATOR = new Creator<Service>() {
 
 
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Service createFromParcel(Parcel in) {
-            Service instance = new Service();
-            instance.id = ((String) in.readValue((String.class.getClassLoader())));
-            instance.title = ((String) in.readValue((String.class.getClassLoader())));
-            instance.description = ((String) in.readValue((String.class.getClassLoader())));
-            instance.price = ((String) in.readValue((String.class.getClassLoader())));
-            instance.company = ((Company) in.readValue((Company.class.getClassLoader())));
-            return instance;
-        }
-
-        public Service[] newArray(int size) {
-            return (new Service[size]);
-        }
-
+    protected Service(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        description = in.readString();
+        price = in.readString();
+        priority = in.readString();
+        company = in.readParcelable(Company.class.getClassLoader());
     }
-            ;
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(price);
+        dest.writeString(priority);
+        dest.writeParcelable(company, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Service> CREATOR = new Creator<Service>() {
+        @Override
+        public Service createFromParcel(Parcel in) {
+            return new Service(in);
+        }
+
+        @Override
+        public Service[] newArray(int size) {
+            return new Service[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -93,16 +111,11 @@ public class Service implements Parcelable,Serializable
         this.company = company;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(id);
-        dest.writeValue(title);
-        dest.writeValue(description);
-        dest.writeValue(price);
-        dest.writeValue(company);
+    public String getPriority() {
+        return priority;
     }
 
-    public int describeContents() {
-        return 0;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
-
 }

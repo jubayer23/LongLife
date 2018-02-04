@@ -28,7 +28,7 @@ public class GlobalAppAccess {
     public static final String  CAT_FAVOURITE = "Favourite";
     public static final String  CAT_FAVOURITE_ID = "-100";
     public static final String  CAT_EMERGENCY = "Emergency";
-    public static final String  CAT_EMERGENCY_ID = "Emergency";
+    public static final String  CAT_EMERGENCY_ID = "0";
 
 
 

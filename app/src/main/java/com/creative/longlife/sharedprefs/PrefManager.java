@@ -46,6 +46,7 @@ public class PrefManager {
 
     private static final String KEY_RECEIVED_CARD_OBJ = "received_card_obj";
     private static final String KEY_FAV_SERVICE = "fav_service";
+    private static final String KEY_EMERGENCY_SERVICE = "emr_service";
     private static final String KEY_NOTIFICATION = "notification";
     private static final String KEY_REMINDER = "reminder";
     private static final String KEY_EMAIL_CACHE = "key_email_cache";
@@ -139,6 +140,40 @@ public class PrefManager {
         return productFromShared;
     }
 
+
+    public void setEmergencyServices(List<Service> obj) {
+        editor = pref.edit();
+
+        editor.putString(KEY_EMERGENCY_SERVICE, GSON.toJson(obj));
+
+        // commit changes
+        editor.commit();
+    }
+
+    public void setEmergencyServices(String obj) {
+        editor = pref.edit();
+
+        editor.putString(KEY_EMERGENCY_SERVICE, obj);
+
+        // commit changes
+        editor.commit();
+    }
+
+
+    public List<Service> getEmergencyServices() {
+
+        List<Service> productFromShared = new ArrayList<>();
+
+        String gson = pref.getString(KEY_EMERGENCY_SERVICE, "");
+
+        if (gson.isEmpty()) return productFromShared;
+
+        Type type = new TypeToken<List<Service>>() {
+        }.getType();
+        productFromShared = GSON.fromJson(gson, type);
+
+        return productFromShared;
+    }
 
 
     public void setNotifications(List<Notification> obj) {

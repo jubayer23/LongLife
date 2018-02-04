@@ -1,5 +1,6 @@
 package com.creative.longlife.fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -16,14 +21,19 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.creative.longlife.HomeActivity;
+import com.creative.longlife.ProfileActivity;
 import com.creative.longlife.R;
+import com.creative.longlife.Utility.DeviceInfoUtils;
+import com.creative.longlife.adapter.ExpandableListAdapter;
 import com.creative.longlife.adapter.ServiceListAdapter2;
 import com.creative.longlife.alertbanner.AlertDialogForAnything;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
+import com.creative.longlife.model.Region;
 import com.creative.longlife.model.Service;
 import com.creative.longlife.model.ServiceList;
+import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -53,7 +63,13 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
     private Category category;
 
-    private TextView tv_category_name;
+    private TextView tv_category_name,tv_region,tv_change_region;
+
+    private static final int SERVICE_TYPE_EMR = 0;
+    private static final int SERVICE_TYPE_OTHER = 1;
+
+    private String state_name = "";
+    private String local_govt_name = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +111,18 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                 changeUiForNoCategory(true);
 
 
-        } else {
+        } else if(category.getId().equals(GlobalAppAccess.CAT_EMERGENCY_ID)){
+            if(DeviceInfoUtils.isConnectingToInternet(getActivity())){
+                sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
+            }else{
+                services.addAll(MydApplication.getInstance().getPrefManger().getEmergencyServices());
+                serviceListAdapter.notifyDataSetChanged();
+
+                if (services.size() == 0)
+                    changeUiForNoCategory(true);
+            }
+
+        }else {
             sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
         }
 
@@ -105,9 +132,13 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     private void init(View view) {
 
         gson = new Gson();
+        User user = MydApplication.getInstance().getPrefManger().getUserProfile();
 
         tv_category_name = (TextView) view.findViewById(R.id.tv_category_name);
         tv_category_name.setText(category.getName());
+        tv_region = (TextView) view.findViewById(R.id.tv_region);
+        tv_region.setText(user.getStateName() + ", "+ user.getLocalGovtName());
+        tv_change_region = (TextView) view.findViewById(R.id.tv_change_region);
 
         // gridView = (GridView) view.findViewById(R.id.gridview_latestmovie);
         ll_no_category_warning_container = (LinearLayout) view.findViewById(R.id.ll_no_category_warning_container);
@@ -148,10 +179,151 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
         recyclerView.setAdapter(serviceListAdapter);
     }
 
+    Dialog dialog_start;
+    ExpandableListAdapter listAdapter;
+    Region region;
+    public void dialogShowRegion2(View view) {
+
+        dialog_start = new Dialog(getActivity(),
+                android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        dialog_start.setCancelable(true);
+        dialog_start.setContentView(R.layout.dialog_show_region_2);
+
+        Button btn_submit = (Button) dialog_start.findViewById(R.id.btn_send);
+        ImageView img_close = (ImageView) dialog_start.findViewById(R.id.img_close);
+        ProgressBar loading_spinner = (ProgressBar) dialog_start.findViewById(R.id.loading_spinner);
+
+
+        ExpandableListView expListView = (ExpandableListView) dialog_start.findViewById(R.id.lvExp);
+        region = new Region();
+        listAdapter = new ExpandableListAdapter(getActivity(), region);
+        expListView.setAdapter(listAdapter);
+
+        sendRequestToGetRegoin(GlobalAppAccess.URL_LOCAL_STATES_GOVTS, expListView, loading_spinner);
+
+        final String[] state = new String[1];
+        final String[] local_govt = new String[1];
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (ExpandableListAdapter.color_group_pos >= 0 && ExpandableListAdapter.color_child_pos >= 0) {
+                    state[0] = region.getLocalStates().get(ExpandableListAdapter.color_group_pos).getStateName();
+                    local_govt[0] = region.getLocalStates().
+                            get(ExpandableListAdapter.color_group_pos).
+                            getLocalGovts().
+                            get(ExpandableListAdapter.color_child_pos).
+                            getGovtName();
+
+
+                    updateEditTextRegion(state[0], local_govt[0]);
+                    dialog_start.dismiss();
+
+                } else {
+
+                    Log.d("DEBUG", "called 01");
+                    dialog_start.dismiss();
+                }
+
+
+                //state_name = sp_location_states.getSelectedItem().toString();
+                // local_govt_name = sp_location_local_govt.getSelectedItem().toString();
+
+
+            }
+        });
+
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_start.dismiss();
+            }
+        });
+
+
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+
+
+                Log.d("DEBUG", state[0]);
+                Log.d("DEBUG", local_govt[0]);
+
+                return false;
+            }
+        });
+
+
+        dialog_start.show();
+    }
+
+    private void updateEditTextRegion(String stateName, String localGovt) {
+        User user = MydApplication.getInstance().getPrefManger().getUserProfile();
+        this.state_name = stateName;
+        this.local_govt_name = localGovt;
+        tv_region.setText(stateName +", " + localGovt);
+
+        if(!state_name.equals(user.getStateName()) || !local_govt_name.equals(user.getLocalGovtName())){
+            sendRequestToUpdateProfile(GlobalAppAccess.URL_UPDATE_PROFILE,state_name,local_govt_name);
+        }
+    }
+
+    public void sendRequestToGetRegoin(String url, final ExpandableListView expandableListView, final ProgressBar progressBar) {
+
+        //url = url + "?nigerian_state=" + state_name;
+        // TODO Auto-generated method stub
+        //showProgressDialog("Loading..", true, false);
+        progressBar.setVisibility(View.VISIBLE);
+
+        final StringRequest req = new StringRequest(Request.Method.GET, url,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        //Log.d("DEBUG", response);
+
+                        region = MydApplication.gson.fromJson(response, Region.class);
+
+                        if (region.getStatus()) {
+                            listAdapter = new ExpandableListAdapter(getActivity(), region);
+                            expandableListView.setAdapter(listAdapter);
+                        }
+
+                        //dismissProgressDialog();
+                        progressBar.setVisibility(View.INVISIBLE);
+
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //  dismissProgressDialog();
+
+                progressBar.setVisibility(View.INVISIBLE);
+
+
+                // AlertDialogForAnything.showAlertDialogWhenComplte(RegistrationActivity.this, "Error", "Network problem. please try again!", false);
+
+            }
+        });
+
+        req.setRetryPolicy(new DefaultRetryPolicy(60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // TODO Auto-generated method stub
+        MydApplication.getInstance().addToRequestQueue(req);
+    }
 
     public void sendRequestToGetServiceList(String url) {
 
-        url = url + "?category_id=" + category.getId();
+
+
+        url = url + "?category_id=" + category.getId() + "&local_govt_id=" +
+        MydApplication.getInstance().getPrefManger().getUserProfile().getLocalGovtId();
 
 
         // url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
@@ -177,10 +349,15 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
 
                         if (movies.getSuccess() == 1) {
+                            services.clear();
                             services.addAll(movies.getServices());
                             serviceListAdapter.notifyDataSetChanged();
                         } else {
                             changeUiForNoCategory(true);
+                        }
+
+                        if(category.getId().equals(GlobalAppAccess.CAT_EMERGENCY_ID)){
+                            MydApplication.getInstance().getPrefManger().setEmergencyServices(services);
                         }
 
 
@@ -195,6 +372,45 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                         "ERROR",
                         "Something went wrong!!",
                         false);
+
+            }
+        });
+
+        req.setRetryPolicy(new DefaultRetryPolicy(60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // TODO Auto-generated method stub
+        MydApplication.getInstance().addToRequestQueue(req);
+    }
+
+    public void sendRequestToUpdateProfile(String url,  String state_name,String local_govt_name) {
+
+
+        url = url + "&state=" + state_name + "&local_govt=" + local_govt_name;
+
+        // TODO Auto-generated method stub
+        ((HomeActivity) getActivity()).showProgressDialog("Loading..", true, false);
+
+        final StringRequest req = new StringRequest(Request.Method.GET, url,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        //Log.d("DEBUG", response);
+
+                        //TODO
+
+                        ((HomeActivity) getActivity()).dismissProgressDialog();
+
+                        sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                ((HomeActivity) getActivity()).dismissProgressDialog();
+
+                AlertDialogForAnything.showAlertDialogWhenComplte(getActivity(), "Error", "Network problem. please try again!", false);
 
             }
         });

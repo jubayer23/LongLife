@@ -24,6 +24,9 @@ public class User implements Serializable
     @SerializedName("gdCode")
     @Expose
     private String gdCode;
+    @SerializedName("local_govt_id")
+    @Expose
+    private String localGovtId;
     @SerializedName("stateName")
     @Expose
     private String stateName;
@@ -40,15 +43,25 @@ public class User implements Serializable
 
     private String login_type;
 
-    public User(String id, String name, String email, String gdCode, String stateName, String localGovtName, String sex, String dob) {
+
+    public User(String id, String name, String email, String gdCode, String localGovtId, String stateName, String localGovtName, String sex, String dob) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.gdCode = gdCode;
+        this.localGovtId = localGovtId;
         this.stateName = stateName;
         this.localGovtName = localGovtName;
         this.sex = sex;
         this.dob = dob;
+    }
+
+    public String getLocalGovtId() {
+        return localGovtId;
+    }
+
+    public void setLocalGovtId(String localGovtId) {
+        this.localGovtId = localGovtId;
     }
 
     public String getId() {

@@ -31,29 +31,47 @@ public class Company implements Parcelable
     @SerializedName("status")
     @Expose
     private String status;
-    public final static Parcelable.Creator<Company> CREATOR = new Creator<Company>() {
+    @SerializedName("city")
+    @Expose
+    private String city;
 
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Company createFromParcel(Parcel in) {
-            Company instance = new Company();
-            instance.name = ((String) in.readValue((String.class.getClassLoader())));
-            instance.phone = ((String) in.readValue((String.class.getClassLoader())));
-            instance.email = ((String) in.readValue((String.class.getClassLoader())));
-            instance.contactPerson = ((String) in.readValue((String.class.getClassLoader())));
-            instance.address = ((String) in.readValue((String.class.getClassLoader())));
-            instance.status = ((String) in.readValue((String.class.getClassLoader())));
-            return instance;
-        }
-
-        public Company[] newArray(int size) {
-            return (new Company[size]);
-        }
-
+    protected Company(Parcel in) {
+        name = in.readString();
+        phone = in.readString();
+        email = in.readString();
+        contactPerson = in.readString();
+        address = in.readString();
+        status = in.readString();
+        city = in.readString();
     }
-            ;
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(phone);
+        dest.writeString(email);
+        dest.writeString(contactPerson);
+        dest.writeString(address);
+        dest.writeString(status);
+        dest.writeString(city);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Company> CREATOR = new Creator<Company>() {
+        @Override
+        public Company createFromParcel(Parcel in) {
+            return new Company(in);
+        }
+
+        @Override
+        public Company[] newArray(int size) {
+            return new Company[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -103,17 +121,13 @@ public class Company implements Parcelable
         this.status = status;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(name);
-        dest.writeValue(phone);
-        dest.writeValue(email);
-        dest.writeValue(contactPerson);
-        dest.writeValue(address);
-        dest.writeValue(status);
+    public String getCity() {
+        return city;
     }
 
-    public int describeContents() {
-        return 0;
+    public void setCity(String city) {
+        this.city = city;
     }
+
 
 }

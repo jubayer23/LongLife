@@ -398,7 +398,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onResponse(String response) {
 
-                        //Log.d("DEBUG",response);
+                        Log.d("DEBUG",response);
 
                         dismissProgressDialog();
 
@@ -409,7 +409,9 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                             if (jspJsonObject.getInt("success") == 1) {
 
                                 String user_id = jspJsonObject.getString("user_id");
-                                User user = new User(user_id, name, email, finalGd_code, state_name, local_govt_name, sex, "12/13/2017");
+                                String local_govt_id = jspJsonObject.getString("local_govt_id");
+
+                                User user = new User(user_id, name, email, finalGd_code, local_govt_id, state_name, local_govt_name, sex, "12/13/2017");
                                 MydApplication.getInstance().getPrefManger().setUserProfile(user);
                                 startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
                                 finish();
