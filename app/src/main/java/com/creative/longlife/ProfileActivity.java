@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,6 +22,9 @@ import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Region;
 import com.creative.longlife.model.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ProfileActivity extends BaseActivity implements View.OnClickListener{
 
@@ -93,7 +97,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 return;
             }
 
-            sendRequestToUpdateProfile(GlobalAppAccess.URL_UPDATE_PROFILE,name,state_name,local_govt_name);
+            sendRequestToUpdateProfile(GlobalAppAccess.URL_UPDATE_PROFILE,user.getId(),name,state_name,local_govt_name);
 
         }
 
@@ -242,9 +246,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         MydApplication.getInstance().addToRequestQueue(req);
     }
 
-    public void sendRequestToUpdateProfile(String url, String name, String state_name,String local_govt_name) {
+    public void sendRequestToUpdateProfile(String url, String user_id,final String name, final String state_name, final String local_govt_name) {
 
-        url = url + "?name=" + name;
+        url = url + "?user_id=" + user_id + "&name=" + name;
 
         if(!state_name.isEmpty() && !local_govt_name.isEmpty()){
             url = url + "&state=" + state_name + "&local_govt=" + local_govt_name;
@@ -257,11 +261,31 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onResponse(String response) {
 
-                        //Log.d("DEBUG", response);
+                        Log.d("DEBUG", response);
 
-                       //TODO
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int isSucess = jsonObject.getInt("success");
+                            if(isSucess == 1){
+                                String local_govt_id = jsonObject.getString("local_govt_id");
 
-                       dismissProgressDialog();
+                                User user = MydApplication.getInstance().getPrefManger().getUserProfile();
+                                user.setName(name);
+                                if(!state_name.isEmpty() && !local_govt_name.isEmpty()){
+                                    user.setStateName(state_name);
+                                    user.setLocalGovtName(local_govt_name);
+                                }
+                                user.setLocalGovtId(local_govt_id);
+                                MydApplication.getInstance().getPrefManger().setUserProfile(user);
+                                Toast.makeText(ProfileActivity.this,"Successfully profile updated!",Toast.LENGTH_SHORT).show();
+
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        dismissProgressDialog();
 
 
                     }

@@ -36,6 +36,9 @@ import com.creative.longlife.model.ServiceList;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +66,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
     private Category category;
 
-    private TextView tv_category_name,tv_region,tv_change_region;
+    private TextView tv_category_name, tv_region, tv_change_region;
 
     private static final int SERVICE_TYPE_EMR = 0;
     private static final int SERVICE_TYPE_OTHER = 1;
@@ -111,10 +114,10 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                 changeUiForNoCategory(true);
 
 
-        } else if(category.getId().equals(GlobalAppAccess.CAT_EMERGENCY_ID)){
-            if(DeviceInfoUtils.isConnectingToInternet(getActivity())){
+        } else if (category.getId().equals(GlobalAppAccess.CAT_EMERGENCY_ID)) {
+            if (DeviceInfoUtils.isConnectingToInternet(getActivity())) {
                 sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
-            }else{
+            } else {
                 services.addAll(MydApplication.getInstance().getPrefManger().getEmergencyServices());
                 serviceListAdapter.notifyDataSetChanged();
 
@@ -122,7 +125,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                     changeUiForNoCategory(true);
             }
 
-        }else {
+        } else {
             sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
         }
 
@@ -137,9 +140,14 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
         tv_category_name = (TextView) view.findViewById(R.id.tv_category_name);
         tv_category_name.setText(category.getName());
         tv_region = (TextView) view.findViewById(R.id.tv_region);
-        tv_region.setText(user.getStateName() + ", "+ user.getLocalGovtName());
+        tv_region.setText(user.getStateName() + ", " + user.getLocalGovtName());
         tv_change_region = (TextView) view.findViewById(R.id.tv_change_region);
-
+        tv_change_region.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogShowRegion2();
+            }
+        });
         // gridView = (GridView) view.findViewById(R.id.gridview_latestmovie);
         ll_no_category_warning_container = (LinearLayout) view.findViewById(R.id.ll_no_category_warning_container);
         ll_recycler_container = (LinearLayout) view.findViewById(R.id.ll_recycler_container);
@@ -182,7 +190,8 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     Dialog dialog_start;
     ExpandableListAdapter listAdapter;
     Region region;
-    public void dialogShowRegion2(View view) {
+
+    public void dialogShowRegion2() {
 
         dialog_start = new Dialog(getActivity(),
                 android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
@@ -265,10 +274,10 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
         User user = MydApplication.getInstance().getPrefManger().getUserProfile();
         this.state_name = stateName;
         this.local_govt_name = localGovt;
-        tv_region.setText(stateName +", " + localGovt);
+        tv_region.setText(stateName + ", " + localGovt);
 
-        if(!state_name.equals(user.getStateName()) || !local_govt_name.equals(user.getLocalGovtName())){
-            sendRequestToUpdateProfile(GlobalAppAccess.URL_UPDATE_PROFILE,state_name,local_govt_name);
+        if (!state_name.equals(user.getStateName()) || !local_govt_name.equals(user.getLocalGovtName())) {
+            sendRequestToUpdateProfile(GlobalAppAccess.URL_UPDATE_PROFILE,user.getId(), state_name, local_govt_name);
         }
     }
 
@@ -321,9 +330,8 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     public void sendRequestToGetServiceList(String url) {
 
 
-
         url = url + "?category_id=" + category.getId() + "&local_govt_id=" +
-        MydApplication.getInstance().getPrefManger().getUserProfile().getLocalGovtId();
+                MydApplication.getInstance().getPrefManger().getUserProfile().getLocalGovtId();
 
 
         // url = url + "?user_id=" + MydApplication.getInstance().getPrefManger().getUserProfile().getId();
@@ -356,7 +364,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                             changeUiForNoCategory(true);
                         }
 
-                        if(category.getId().equals(GlobalAppAccess.CAT_EMERGENCY_ID)){
+                        if (category.getId().equals(GlobalAppAccess.CAT_EMERGENCY_ID)) {
                             MydApplication.getInstance().getPrefManger().setEmergencyServices(services);
                         }
 
@@ -382,10 +390,10 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
         MydApplication.getInstance().addToRequestQueue(req);
     }
 
-    public void sendRequestToUpdateProfile(String url,  String state_name,String local_govt_name) {
+    public void sendRequestToUpdateProfile(String url, String user_id, final String state_name, final String local_govt_name) {
 
 
-        url = url + "&state=" + state_name + "&local_govt=" + local_govt_name;
+        url = url + "?user_id=" + user_id + "&state=" + state_name + "&local_govt=" + local_govt_name;
 
         // TODO Auto-generated method stub
         ((HomeActivity) getActivity()).showProgressDialog("Loading..", true, false);
@@ -401,7 +409,27 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
 
                         ((HomeActivity) getActivity()).dismissProgressDialog();
 
-                        sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int isSucess = jsonObject.getInt("success");
+                            if (isSucess == 1) {
+                                String local_govt_id = jsonObject.getString("local_govt_id");
+
+                                User user = MydApplication.getInstance().getPrefManger().getUserProfile();
+
+                                user.setStateName(state_name);
+                                user.setLocalGovtName(local_govt_name);
+                                user.setLocalGovtId(local_govt_id);
+
+                                MydApplication.getInstance().getPrefManger().setUserProfile(user);
+
+                                sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
 
                     }
                 }, new com.android.volley.Response.ErrorListener() {
