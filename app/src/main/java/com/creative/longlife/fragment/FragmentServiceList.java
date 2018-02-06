@@ -60,7 +60,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     //LinearLayoutManager listLayoutManager;
     LinearLayoutManager listLayoutManager;
 
-    LinearLayout ll_no_category_warning_container, ll_recycler_container;
+    LinearLayout ll_no_category_warning_container, ll_recycler_container,ll_change_region_container;
 
     TextView tv_choose_category;
 
@@ -151,6 +151,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
         // gridView = (GridView) view.findViewById(R.id.gridview_latestmovie);
         ll_no_category_warning_container = (LinearLayout) view.findViewById(R.id.ll_no_category_warning_container);
         ll_recycler_container = (LinearLayout) view.findViewById(R.id.ll_recycler_container);
+        ll_change_region_container = (LinearLayout) view.findViewById(R.id.ll_change_region_container);
 
         tv_choose_category = (TextView) view.findViewById(R.id.tv_choose_category);
 
@@ -360,6 +361,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                             services.clear();
                             services.addAll(movies.getServices());
                             serviceListAdapter.notifyDataSetChanged();
+                            changeUiForNoCategory(false);
                         } else {
                             changeUiForNoCategory(true);
                         }
