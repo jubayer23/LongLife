@@ -57,6 +57,7 @@ public class ServiceListAdapter2
         final Service service = this.moviesList.get(paramInt);
 
         ((ListViewHolder) holder).tv_service_title.setText(service.getTitle());
+        ((ListViewHolder) holder).tv_city.setText("City : " + service.getCompany().getCity());
         ((ListViewHolder) holder).tv_price.setText("$ " +service.getPrice());
 
 
@@ -130,6 +131,7 @@ public class ServiceListAdapter2
         public RelativeLayout btn_call_now;
         public TextView view_btn_see_more;
         public TextView view_btn_call_now;
+        public TextView tv_city;
 
         public ListViewHolder(View paramView) {
             super(paramView);
@@ -139,6 +141,7 @@ public class ServiceListAdapter2
             this.btn_call_now = ((RelativeLayout) paramView.findViewById(R.id.btn_call_now));
             this.view_btn_see_more = ((TextView) paramView.findViewById(R.id.view_btn_see_more));
             this.view_btn_call_now = ((TextView) paramView.findViewById(R.id.view_btn_call_now));
+            this.tv_city = ((TextView) paramView.findViewById(R.id.tv_city));
             //this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
             //this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
         }
