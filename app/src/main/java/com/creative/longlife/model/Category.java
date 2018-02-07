@@ -19,21 +19,39 @@ public class Category implements Parcelable
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("priority")
     @Expose
     private String priority;
     private final static long serialVersionUID = 1111230700846377460L;
 
+    public Category(String id, String name, String description, String priority) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.priority = priority;
+    }
+
     protected Category(Parcel in) {
         id = in.readString();
         name = in.readString();
+        description = in.readString();
         priority = in.readString();
     }
 
-    public Category(String id, String name, String priority) {
-        this.id = id;
-        this.name = name;
-        this.priority = priority;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(priority);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Category> CREATOR = new Creator<Category>() {
@@ -72,15 +90,11 @@ public class Category implements Parcelable
         this.priority = priority;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getDescription() {
+        return description;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(priority);
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
