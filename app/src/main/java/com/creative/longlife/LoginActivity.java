@@ -162,7 +162,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("DEBUG",response);
+                        //Log.d("DEBUG",response);
 
                         dismissProgressDialog();
 

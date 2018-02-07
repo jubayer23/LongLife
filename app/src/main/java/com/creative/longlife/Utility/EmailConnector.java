@@ -97,11 +97,12 @@ public class EmailConnector {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int result = jsonObject.getInt("success");
+                            String message = jsonObject.getString("message");
                             if(result == 1){
                                 if(dialog_start.isShowing())dialog_start.dismiss();
-                                showSuccessDialog(SUCCESS);
+                                showSuccessDialog(SUCCESS,message);
                             }else{
-                                showSuccessDialog(ERROR);
+                                showSuccessDialog(ERROR,message);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -131,7 +132,7 @@ public class EmailConnector {
         MydApplication.getInstance().addToRequestQueue(req);
     }
 
-    private void showSuccessDialog(int code){
+    private void showSuccessDialog(int code, String message){
         switch (code) {
             case SUCCESS:
                AlertDialogForAnything.showAlertDialogWhenComplte(context,"Alert",
@@ -139,7 +140,7 @@ public class EmailConnector {
                 break;
             case ERROR:
                 AlertDialogForAnything.showAlertDialogWhenComplte(context,"Alert",
-                        "There is an error! Please try again later!",false);
+                        message,false);
                 break;
         }
     }
