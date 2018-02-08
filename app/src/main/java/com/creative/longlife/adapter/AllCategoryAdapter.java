@@ -57,6 +57,7 @@ public class AllCategoryAdapter
         final Category category = this.moviesList.get(paramInt);
 
         ((ListViewHolder) holder).tv_category_name.setText(category.getName());
+        ((ListViewHolder) holder).tv_description.setText(category.getDescription());
         ((ListViewHolder) holder).chk_category.setChecked(false);
         for (Category user_category : user_categories) {
             if (user_category.getId().equals(category.getId())) {
@@ -100,12 +101,14 @@ public class AllCategoryAdapter
     public class ListViewHolder
             extends RecyclerView.ViewHolder {
         public TextView tv_category_name;
+        public TextView tv_description;
         public CheckBox chk_category;
 
         public ListViewHolder(View paramView) {
             super(paramView);
             this.tv_category_name = ((TextView) paramView.findViewById(R.id.tv_category_name));
             this.chk_category = ((CheckBox) paramView.findViewById(R.id.chk_category));
+            this.tv_description = ((TextView) paramView.findViewById(R.id.tv_description));
             //this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
             //this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
         }

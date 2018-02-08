@@ -54,7 +54,7 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
     LinearLayout ll_no_category_warning_container,ll_main_container;
 
-    TextView tv_choose_category,tv_your_location;
+    TextView tv_choose_category;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +103,6 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
 
         tv_choose_category = (TextView) view.findViewById(R.id.tv_choose_category);
-        tv_your_location = (TextView) view.findViewById(R.id.tv_your_location);
 
         fabTopToTheList = (FloatingActionButton) view.findViewById(R.id.fabTopToTheList);
         fabTopToTheList.setVisibility(View.GONE);
@@ -133,7 +132,6 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
     }
     private void initUserLocation(){
         User user = MydApplication.getInstance().getPrefManger().getUserProfile();
-        tv_your_location.setText(user.getStateName());
     }
 
 
