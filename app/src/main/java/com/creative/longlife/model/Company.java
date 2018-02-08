@@ -16,7 +16,7 @@ public class Company implements Parcelable
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("icon_phone")
+    @SerializedName("phone")
     @Expose
     private String phone;
     @SerializedName("email")
