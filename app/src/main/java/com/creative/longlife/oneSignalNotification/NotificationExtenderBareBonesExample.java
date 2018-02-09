@@ -1,4 +1,4 @@
-package com.creative.longlife.service;
+package com.creative.longlife.oneSignalNotification;
 
 /**
  * Created by jubayer on 1/22/2018.

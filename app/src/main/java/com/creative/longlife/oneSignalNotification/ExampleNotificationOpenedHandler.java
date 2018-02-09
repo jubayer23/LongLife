@@ -1,4 +1,4 @@
-package com.creative.longlife.service;
+package com.creative.longlife.oneSignalNotification;
 
 import android.app.Application;
 import android.app.NotificationManager;
@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.creative.longlife.HomeActivity;
 import com.creative.longlife.LoginActivity;
 import com.creative.longlife.NotificationActivity;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
-import com.creative.longlife.model.Notification;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;

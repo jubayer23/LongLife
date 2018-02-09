@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.creative.longlife.R;
 import com.creative.longlife.ServiceDetailsActivity;
+import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Service;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -60,6 +62,11 @@ public class ServiceListAdapter2
         ((ListViewHolder) holder).tv_service_title.setText(service.getTitle());
         ((ListViewHolder) holder).tv_city.setText("City : " + service.getCompany().getCity());
         ((ListViewHolder) holder).tv_price.setText("$ " +service.getPrice());
+
+        if(service.getImg_url() != null && !service.getImg_url().isEmpty()){
+            Uri imageUri = Uri.parse(GlobalAppAccess.BASE_URL_IMAGE + service.getImg_url());
+            ((ListViewHolder) holder).img_cover.setImageURI(imageUri);
+        }
 
 
 
@@ -133,6 +140,7 @@ public class ServiceListAdapter2
         public TextView view_btn_see_more;
         public TextView view_btn_call_now;
         public TextView tv_city;
+        public SimpleDraweeView img_cover;
 
         public ListViewHolder(View paramView) {
             super(paramView);
@@ -143,6 +151,7 @@ public class ServiceListAdapter2
             this.view_btn_see_more = ((TextView) paramView.findViewById(R.id.view_btn_see_more));
             this.view_btn_call_now = ((TextView) paramView.findViewById(R.id.view_btn_call_now));
             this.tv_city = ((TextView) paramView.findViewById(R.id.tv_city));
+            this.img_cover = ((SimpleDraweeView) paramView.findViewById(R.id.img_cover));
             //this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
             //this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
         }

@@ -1,4 +1,4 @@
-package com.creative.longlife.service;
+package com.creative.longlife.oneSignalNotification;
 
 import android.util.Log;
 

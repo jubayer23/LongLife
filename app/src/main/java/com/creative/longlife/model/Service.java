@@ -30,6 +30,9 @@ public class Service implements Parcelable,Serializable
     @SerializedName("priority")
     @Expose
     private String priority;
+    @SerializedName("img_url")
+    @Expose
+    private String img_url;
     @SerializedName("company")
     @Expose
     private Company company;
@@ -41,6 +44,7 @@ public class Service implements Parcelable,Serializable
         description = in.readString();
         price = in.readString();
         priority = in.readString();
+        img_url = in.readString();
         company = in.readParcelable(Company.class.getClassLoader());
     }
 
@@ -51,6 +55,7 @@ public class Service implements Parcelable,Serializable
         dest.writeString(description);
         dest.writeString(price);
         dest.writeString(priority);
+        dest.writeString(img_url);
         dest.writeParcelable(company, flags);
     }
 
@@ -70,6 +75,14 @@ public class Service implements Parcelable,Serializable
             return new Service[size];
         }
     };
+
+    public String getImg_url() {
+        return img_url;
+    }
+
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
+    }
 
     public String getId() {
         return id;
