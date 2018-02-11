@@ -165,8 +165,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 String textToShare = "Take a swim in private, learn tennis, learn golf, play basketball. Skate, hover, surf." +
-                        " Lose weight, stay fit, live life.\nWith LongLife, contacts and addresses of wellness and health professions are just a click away.\n Download LongLife App today" +
-                        "\nLongLife: https://play.google.com/store/apps/details?id=" + getPackageName();
+                        " Lose weight, stay fit, live life.\n\nWith LongLife, contacts and addresses of wellness and health professions are just a click away.\n\nDownload LongLife App today" +
+                        "\n\nLongLife: https://play.google.com/store/apps/details?id=" + getPackageName();
                 //String textToShare = "<h1>"+ current_service.getTitle() +"</h1><br><br><p>LongLife: https://play.google.com/store/apps/details?id=com.creative.longlife</p>";
                 sendIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
                 sendIntent.setType("text/plain");

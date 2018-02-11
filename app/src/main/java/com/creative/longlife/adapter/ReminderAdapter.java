@@ -92,9 +92,13 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
         }
 
         if(alarm_fire_time != null && !alarm_fire_time.isEmpty() && event.getTime().equals(alarm_fire_time)){
-            holder.ll_container.setBackgroundResource(R.color.green_light);
+            holder.ll_container.setBackgroundResource(R.color.blue_deep_extreme);
+            holder.tv_title.setTextColor(activity.getResources().getColor(R.color.blue_light_2));
+            holder.tv_sub_title.setTextColor(activity.getResources().getColor(R.color.white));
         }else{
             holder.ll_container.setBackgroundResource(R.color.white);
+            holder.tv_title.setTextColor(activity.getResources().getColor(R.color.black));
+            holder.tv_sub_title.setTextColor(activity.getResources().getColor(R.color.gray));
         }
 
 
