@@ -44,6 +44,14 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_make_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_border_white"
+            fab:fab_label="Make favourite"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,6 +65,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_call_white_24dp"
             fab:fab_label="Call"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_copy_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_content_copy_white"
+            fab:fab_label="Copy number"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton

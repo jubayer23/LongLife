@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -108,6 +109,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
         if (category.getId().equals(GlobalAppAccess.CAT_FAVOURITE_ID)) {
 
             services.addAll(MydApplication.getInstance().getPrefManger().getFavServices());
+            Collections.sort(services, new Service.priorityOrderDescending());
             serviceListAdapter.notifyDataSetChanged();
 
             if (services.size() == 0)
@@ -119,6 +121,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                 sendRequestToGetServiceList(GlobalAppAccess.URL_SERVICE);
             } else {
                 services.addAll(MydApplication.getInstance().getPrefManger().getEmergencyServices());
+                Collections.sort(services, new Service.priorityOrderDescending());
                 serviceListAdapter.notifyDataSetChanged();
 
                 if (services.size() == 0)
@@ -360,6 +363,7 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                         if (movies.getSuccess() == 1) {
                             services.clear();
                             services.addAll(movies.getServices());
+                            Collections.sort(services, new Service.priorityOrderDescending());
                             serviceListAdapter.notifyDataSetChanged();
                             changeUiForNoCategory(false);
                         } else {
@@ -449,5 +453,11 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // TODO Auto-generated method stub
         MydApplication.getInstance().addToRequestQueue(req);
+    }
+
+    public void filterSearch(String text){
+
+        //userCategoryAdapter.filter(text);
+        serviceListAdapter.getFilter().filter(text);
     }
 }

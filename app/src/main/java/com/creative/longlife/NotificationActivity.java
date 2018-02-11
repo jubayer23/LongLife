@@ -89,7 +89,9 @@ public class NotificationActivity extends BaseActivity {
 
         String call_from = getIntent().getStringExtra(GlobalAppAccess.KEY_CALL_FROM);
         if(call_from != null && call_from.equals(GlobalAppAccess.TAG_NOTIFICATION)){
-            startActivity(new Intent(NotificationActivity.this, HomeActivity.class));
+            Intent intent = new Intent(NotificationActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
             finish();
 
         }else{

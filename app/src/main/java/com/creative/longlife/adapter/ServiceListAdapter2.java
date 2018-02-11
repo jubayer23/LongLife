@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,27 +18,31 @@ import com.creative.longlife.R;
 import com.creative.longlife.ServiceDetailsActivity;
 import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
+import com.creative.longlife.model.Category;
 import com.creative.longlife.model.Service;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ServiceListAdapter2
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
 
     public static final String KEY_SERVICE = "service";
     private int listStyle = 0;
     private Context mContext;
     private List<Service> moviesList;
+    private List<Service> originalMovieList;
     private List<Service> favServiceList;
     private HashMap<String, Integer> isFav = new HashMap<>();
 
 
     public ServiceListAdapter2(List<Service> paramList, Context paramContext) {
         this.moviesList = paramList;
+        this.originalMovieList = paramList;
         this.mContext = paramContext;
         this.favServiceList = MydApplication.getInstance().getPrefManger().getFavServices();
         int count = 0;
@@ -155,6 +161,48 @@ public class ServiceListAdapter2
             //this.tv_genre = ((TextView) paramView.findViewById(R.id.tv_genre));
             //this.tv_rating = ((TextView) paramView.findViewById(R.id.tv_rating));
         }
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                moviesList = (List<Service>) results.values;
+                ServiceListAdapter2.this.notifyDataSetChanged();
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Service> filteredResults = null;
+                if (constraint.length() == 0) {
+                    filteredResults = originalMovieList;
+                } else {
+                    filteredResults = getFilteredResults(constraint.toString().toLowerCase());
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredResults;
+
+                return results;
+            }
+        };
+    }
+
+    protected List<Service> getFilteredResults(String constraint) {
+        List<Service> results = new ArrayList<>();
+
+        for (Service item : originalMovieList) {
+
+            if (item.getTitle().toLowerCase().contains(constraint)) {
+                results.add(item);
+            }
+
+
+        }
+        return results;
     }
 
 }

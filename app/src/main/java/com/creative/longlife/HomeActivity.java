@@ -161,6 +161,16 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_setting:
                 //Do some thing here
                 // add navigation drawer item onclick method here
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                String textToShare = "Take a swim in private, learn tennis, learn golf, play basketball. Skate, hover, surf." +
+                        " Lose weight, stay fit, live life.\nWith LongLife, contacts and addresses of wellness and health professions are just a click away.\n Download LongLife App today" +
+                        "\nLongLife: https://play.google.com/store/apps/details?id=" + getPackageName();
+                //String textToShare = "<h1>"+ current_service.getTitle() +"</h1><br><br><p>LongLife: https://play.google.com/store/apps/details?id=com.creative.longlife</p>";
+                sendIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Choose media"));
                 break;
             case R.id.nav_logout:
                 //Do some thing here
@@ -300,6 +310,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         if (fragmentUserCategory.isAdded()) {
             fragmentUserCategory.filterSearch(query);
         }
+        if (fragmentServiceList != null && fragmentServiceList.isAdded()) {
+            fragmentServiceList.filterSearch(query);
+        }
+        if (fragmentAllCategory!=null && fragmentAllCategory.isAdded()) {
+            fragmentAllCategory.filterSearch(query);
+        }
         return true;
     }
 
@@ -307,6 +323,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onQueryTextChange(String newText) {
         if (fragmentUserCategory.isAdded()) {
             fragmentUserCategory.filterSearch(newText);
+        }
+        if (fragmentServiceList != null && fragmentServiceList.isAdded()){
+            fragmentServiceList.filterSearch(newText);
+        }
+        if (fragmentAllCategory!=null && fragmentAllCategory.isAdded()) {
+            fragmentAllCategory.filterSearch(newText);
         }
         return true;
     }

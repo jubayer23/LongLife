@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -24,21 +26,24 @@ import com.creative.longlife.model.Category;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllCategoryAdapter
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
 
     private int listStyle = 0;
     private Context mContext;
     private List<Category> moviesList;
+    private List<Category> originalCategories;
     private List<Category> user_categories;
     private boolean isOnProgress = false;
 
 
     public AllCategoryAdapter(List<Category> paramList, List<Category> user_categories, Context paramContext) {
         this.moviesList = paramList;
+        this.originalCategories = paramList;
         this.user_categories = user_categories;
         this.mContext = paramContext;
     }
@@ -219,6 +224,48 @@ public class AllCategoryAdapter
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                moviesList = (List<Category>) results.values;
+                AllCategoryAdapter.this.notifyDataSetChanged();
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Category> filteredResults = null;
+                if (constraint.length() == 0) {
+                    filteredResults = originalCategories;
+                } else {
+                    filteredResults = getFilteredResults(constraint.toString().toLowerCase());
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredResults;
+
+                return results;
+            }
+        };
+    }
+
+    protected List<Category> getFilteredResults(String constraint) {
+        List<Category> results = new ArrayList<>();
+
+        for (Category item : originalCategories) {
+
+            if (item.getName().toLowerCase().contains(constraint)) {
+                results.add(item);
+            }
+
+
+        }
+        return results;
     }
 }
 

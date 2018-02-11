@@ -1,5 +1,6 @@
 package com.creative.longlife;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -96,7 +97,14 @@ public class ReminderActivity extends BaseActivity {
             }
             MydApplication.getInstance().getPrefManger().setReminders(reminders);
 
+            Intent intent = new Intent(ReminderActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+
+        }else{
+            super.onBackPressed();
         }
-        super.onBackPressed();
+
     }
 }

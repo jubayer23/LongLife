@@ -199,4 +199,10 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
     public List<Category> getUser_categories(){
         return user_categories;
     }
+
+    public void filterSearch(String text){
+
+        //userCategoryAdapter.filter(text);
+        allCategoryAdapter.getFilter().filter(text);
+    }
 }

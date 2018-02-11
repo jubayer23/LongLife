@@ -11,6 +11,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
 
 public class Service implements Parcelable,Serializable
 {
@@ -130,5 +133,15 @@ public class Service implements Parcelable,Serializable
 
     public void setPriority(String priority) {
         this.priority = priority;
+    }
+
+    public static class priorityOrderDescending implements Comparator<Service> {
+        public int compare(Service chair1, Service chair2) {
+
+                int date1 = Integer.parseInt(chair1.getPriority());
+                int date2 = Integer.parseInt(chair2.getPriority());
+                return date2 - date1;
+
+        }
     }
 }

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.creative.longlife.NotificationActivity;
 import com.creative.longlife.R;
@@ -141,6 +142,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         final TextView tv_set_date = (TextView) dialog_start.findViewById(R.id.tv_set_date);
         final TextView tv_set_time = (TextView) dialog_start.findViewById(R.id.tv_set_time);
         Button btn_submit = (Button) dialog_start.findViewById(R.id.btn_submit);
+        ImageView img_close_dialog = (ImageView) dialog_start.findViewById(R.id.img_close_dialog);
 
         final Calendar calendar = Calendar.getInstance();
         calendar.clear();
@@ -205,6 +207,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
         });
 
+        img_close_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog_start.dismiss();
+            }
+        });
+
         dialog_start.show();
 
     }
@@ -228,6 +237,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 101, intent, 0);
         AlarmManager alarmManager = (AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
+
+        Toast.makeText(activity,"Successfully added reminder.",Toast.LENGTH_SHORT).show();
     }
 
     private ProgressDialog progressDialog;

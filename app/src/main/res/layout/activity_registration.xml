@@ -18,7 +18,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -150,7 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="@android:color/darker_gray"
-                    android:hint="Year of birth"
+                    android:hint="Year of birth (e.g. 1981)"
                     android:inputType="numberDecimal"
                     android:paddingLeft="10dp"
                     android:textColor="@color/white"
