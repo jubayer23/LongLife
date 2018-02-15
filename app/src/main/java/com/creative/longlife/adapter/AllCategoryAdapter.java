@@ -259,7 +259,7 @@ public class AllCategoryAdapter
 
         for (Category item : originalCategories) {
 
-            if (item.getName().toLowerCase().contains(constraint)) {
+            if (item.getDescription().toLowerCase().contains(constraint)) {
                 results.add(item);
             }
 

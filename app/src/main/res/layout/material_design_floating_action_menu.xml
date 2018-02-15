@@ -55,8 +55,8 @@
             android:id="@+id/fab_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_chat_white"
-            fab:fab_label="Chat"
+            android:src="@drawable/ic_email_white"
+            fab:fab_label="Email"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton

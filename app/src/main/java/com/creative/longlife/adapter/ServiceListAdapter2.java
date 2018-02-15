@@ -66,8 +66,8 @@ public class ServiceListAdapter2
         final Service service = this.moviesList.get(paramInt);
 
         ((ListViewHolder) holder).tv_service_title.setText(service.getTitle());
-        ((ListViewHolder) holder).tv_city.setText("City : " + service.getCompany().getCity());
-        ((ListViewHolder) holder).tv_price.setText("$ " +service.getPrice());
+        ((ListViewHolder) holder).tv_city.setText(service.getCompany().getCity());
+        ((ListViewHolder) holder).tv_price.setText("Provider: " +service.getCompany().getName());
 
         if(service.getImg_url() != null && !service.getImg_url().isEmpty()){
             Uri imageUri = Uri.parse(GlobalAppAccess.BASE_URL_IMAGE + service.getImg_url());

@@ -113,7 +113,18 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
         }
         if (id == R.id.fab_chat) {
 
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{current_service.getCompany().getEmail()});
+            i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+            i.putExtra(Intent.EXTRA_TEXT   , "body of email");
             try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
+
+           /* try {
                 Intent sendIntent = new Intent("android.intent.action.MAIN");
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.setType("text/plain");
@@ -123,7 +134,7 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
                 startActivity(sendIntent);
             } catch(Exception e) {
                 Toast.makeText(this, "Error\n" + e.toString(), Toast.LENGTH_SHORT).show();
-            }
+            }*/
 
             /*PackageManager pm=getPackageManager();
             try {

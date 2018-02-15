@@ -106,7 +106,10 @@ public class FragmentServiceList extends android.support.v4.app.Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ll_change_region_container.setVisibility(View.VISIBLE);
+
         if (category.getId().equals(GlobalAppAccess.CAT_FAVOURITE_ID)) {
+            ll_change_region_container.setVisibility(View.GONE);
 
             services.addAll(MydApplication.getInstance().getPrefManger().getFavServices());
             Collections.sort(services, new Service.priorityOrderDescending());
