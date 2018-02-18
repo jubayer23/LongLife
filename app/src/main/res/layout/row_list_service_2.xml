@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
 
                         android:layout_marginTop="5dp"
-                        android:text="Persuit of the happiness Persuit of the happiness Persuit of the happiness Persuit of the happinessPersuit of the happinessPersuit of the happinessPersuit of the happiness" />
+                        android:text="Persuit of the happiness" />
 
 
 
@@ -67,20 +67,21 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:layout_below="@+id/tv_price"
                         android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_location_on_black"/>
+                            android:src="@drawable/ic_location_on_green"/>
 
                         <TextView
                             android:id="@+id/tv_city"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/green"
                             style="@style/subContentHeader"
                             android:text="Dhaka"/>
                     </LinearLayout>

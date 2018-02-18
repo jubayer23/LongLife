@@ -67,7 +67,7 @@ public class ServiceListAdapter2
 
         ((ListViewHolder) holder).tv_service_title.setText(service.getTitle());
         ((ListViewHolder) holder).tv_city.setText(service.getCompany().getCity());
-        ((ListViewHolder) holder).tv_price.setText("Provider: " +service.getCompany().getName());
+        ((ListViewHolder) holder).tv_price.setText(service.getCompany().getName());
 
         if(service.getImg_url() != null && !service.getImg_url().isEmpty()){
             Uri imageUri = Uri.parse(GlobalAppAccess.BASE_URL_IMAGE + service.getImg_url());

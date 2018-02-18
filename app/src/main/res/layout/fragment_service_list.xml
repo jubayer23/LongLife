@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/blue_deep_extreme"
+
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:id="@+id/ll_change_region_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Region: "
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_region"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Khadim Nagar, Daspara"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:id="@+id/tv_change_region"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Change"
-            android:textColor="@color/blue"
-            android:textSize="18sp"/>
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@+id/ll_change_region_container"
-        android:id="@+id/ll_recycler_container"
+        android:id="@+id/ll_top_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/blue_deep_extreme"
         android:orientation="vertical">
+
+        <LinearLayout
+
+            android:id="@+id/ll_change_region_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Region: "
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_region"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khadim Nagar, Daspara"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_change_region"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Change"
+                android:textColor="@color/blue"
+                android:textSize="18sp"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_category_name"
@@ -56,6 +58,17 @@
             android:textSize="22sp"
             android:textColor="@color/blue_light_2"
             android:text="Category Name" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_below="@+id/ll_top_container"
+        android:id="@+id/ll_recycler_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
 
 
         <android.support.v7.widget.RecyclerView
