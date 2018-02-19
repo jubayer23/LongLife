@@ -64,8 +64,8 @@ public class ReminderActivity extends BaseActivity {
 
     private void loadData(){
         List<Reminder> tempReminders = MydApplication.getInstance().getPrefManger().getReminders();
-        Log.d("DEBUG",String.valueOf(tempReminders.size()));
-        Collections.sort(tempReminders, new Reminder.timeComparatorDesc());
+        //Log.d("DEBUG",String.valueOf(tempReminders.size()));
+        Collections.sort(tempReminders, new Reminder.timeComparatorAesc());
 
         reminders.addAll(tempReminders);
 
