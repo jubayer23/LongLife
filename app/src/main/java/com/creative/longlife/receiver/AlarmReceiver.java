@@ -41,7 +41,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
         // notification icon
-        final int icon = R.mipmap.ic_launcher;
+        final int icon = R.mipmap.ic_launcher_4;
 
         Intent intent1 = new Intent(context, ReminderActivity.class);
         intent1.putExtra(GlobalAppAccess.KEY_CALL_FROM,GlobalAppAccess.TAG_ALARM_RECEIVER);
@@ -82,7 +82,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 //.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setStyle(inboxStyle)
                 //.setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_4)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();
