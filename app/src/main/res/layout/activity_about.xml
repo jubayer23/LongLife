@@ -45,6 +45,7 @@
                     android:layout_centerVertical="true"
                     android:text="Why LongLife"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="18sp" />
 
                 <TextView
@@ -53,7 +54,8 @@
                     android:textSize="16sp"
                     android:layout_below="@+id/tv_category_name"
                     android:layout_marginTop="2dp"
-                    android:text="The LongLife App brings together in one place, all health and wellness services essential for longer, healthier and happier lives.\n\nTake a swim in private, learn tennis, golf and play basketball. Skate, hover, surf. Lose weight, stay fit, live life.\n\nWith LongLife, contacts and addresses of wellness and health professions are just a click away.\n\nAnd yes, specialist doctors who understand your unique health challenges are also available!" />
+                    android:textColor="@color/black"
+                    android:text="The LongLife App brings together in one place, all health and wellness services essential for longer, health and happier lives.\n\nTake a swim in private, learn tennis, golf and play basketball. Skate, hover, surf. Lose weight, stay fit, live life.\n\nWith LongLife, contacts and addresses of wellness and health professions are just a tap away.\n\nAnd yes, specialist doctors who understand your unique health challenges are also available!" />
 
             </LinearLayout>
 
@@ -73,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Contact Us"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -81,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:layout_marginTop="2dp"
+                    android:textColor="@color/black"
                     android:text="To complain about or commend the listed service(s), send a mail to:" />
 
                 <TextView
@@ -88,11 +92,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:textSize="16sp"
-                    android:text="LongLife.com.ng" />
+                    android:text="CustomerCare@LongLife.com.ng" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:text="\nTo list your wellness or health services on LongLife, send a mail to:" />
                 <TextView
@@ -100,22 +105,24 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:textSize="16sp"
-                    android:text="LongLife.com.ng" />
+                    android:text="Subscribe@LongLife.com.ng" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:textColor="@color/black"
                     android:text="\nTo enquire about App design, send a mail to:" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:textSize="16sp"
-                    android:text="LongLife.com.ng" />
+                    android:text="Support@BillionBinary.com" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:text="\n---\nLongLife is owned by Billion Binary Limited" />
             </LinearLayout>
