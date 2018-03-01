@@ -35,7 +35,7 @@
             android:textColor="@color/white"
             android:layout_marginTop="5dp"
             android:textSize="18sp"
-            android:text="LongLife is the collection of Wellness and Health Services essential for Longer and Healthier Lives”. “Unleash LongLife for You”. “Click on the “Orange Button” by your bottom right, to select categories that applies to you"/>
+            android:text="LongLife is the collection of Wellness and Healthier Services essential for Longer, Healthier and Happier lives. Unleash LongLife for you today! Click the “+” button below to select Health and Wellness categories applicable to you."/>
 
     </LinearLayout>
 
