@@ -124,9 +124,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         TextView tv_name = (TextView) header.findViewById(R.id.tv_name);
-        tv_name.setText(MydApplication.getInstance().getPrefManger().getUserProfile().getName());
+        String output = MydApplication.getInstance().getPrefManger().getUserProfile().getName().substring(0, 1).toUpperCase() + MydApplication.getInstance().getPrefManger().getUserProfile().getName().substring(1);
+        tv_name.setText(output);
         TextView tv_email = (TextView) header.findViewById(R.id.tv_email);
-        tv_email.setText(MydApplication.getInstance().getPrefManger().getUserProfile().getEmail());
+        tv_email.setText(MydApplication.getInstance().getPrefManger().getUserProfile().getEmail().toLowerCase());
     }
 
     @Override

@@ -24,10 +24,12 @@ import com.creative.longlife.appdata.GlobalAppAccess;
 import com.creative.longlife.appdata.MydApplication;
 import com.creative.longlife.model.Category;
 import com.creative.longlife.model.CategoryList;
+import com.creative.longlife.model.Service;
 import com.creative.longlife.model.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -169,6 +171,7 @@ public class FragmentAllCategory extends android.support.v4.app.Fragment {
 
                         if (movies.getSuccess() == 1) {
                             categories.addAll(movies.getCategories());
+                            Collections.sort(categories, new Category.priorityOrderDescending());
                             allCategoryAdapter.notifyDataSetChanged();
                         } else {
                             changeUiForNoCategory(true);

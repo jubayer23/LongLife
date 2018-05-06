@@ -10,6 +10,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
+
 public class Category implements Parcelable
 {
 
@@ -96,5 +98,15 @@ public class Category implements Parcelable
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static class priorityOrderDescending implements Comparator<Category> {
+        public int compare(Category chair1, Category chair2) {
+
+            int date1 = Integer.parseInt(chair1.getPriority());
+            int date2 = Integer.parseInt(chair2.getPriority());
+            return date2 - date1;
+
+        }
     }
 }

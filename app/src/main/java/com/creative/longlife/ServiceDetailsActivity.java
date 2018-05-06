@@ -93,8 +93,12 @@ public class ServiceDetailsActivity extends AppCompatActivity implements View.On
         tv_service_title.setText(current_service.getTitle());
         tv_price = (TextView) findViewById(R.id.tv_price);
         int number = Integer.parseInt(current_service.getPrice());
-        String numberAsString = String.format("%,d", number);
-        tv_price.setText("N" + numberAsString);
+        if(number <= 0){
+            tv_price.setText("Free");
+        }else{
+            String numberAsString = String.format("%,d", number);
+            tv_price.setText("N" + numberAsString);
+        }
         tv_company_name = (TextView) findViewById(R.id.tv_company_name);
         tv_company_name.setText(current_service.getCompany().getName());
         tv_address = (TextView) findViewById(R.id.tv_address);

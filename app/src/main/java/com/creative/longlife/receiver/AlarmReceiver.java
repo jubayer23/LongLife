@@ -82,7 +82,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 //.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setStyle(inboxStyle)
                 //.setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher_5)
+                .setSmallIcon(R.drawable.ic_stat_onesignal_default)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();
