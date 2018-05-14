@@ -109,4 +109,14 @@ public class Category implements Parcelable
 
         }
     }
+
+    public static class idOrderAscending implements Comparator<Category> {
+        public int compare(Category chair1, Category chair2) {
+
+            int date1 = Integer.parseInt(chair1.getId());
+            int date2 = Integer.parseInt(chair2.getId());
+            return date1 - date2 ;
+
+        }
+    }
 }

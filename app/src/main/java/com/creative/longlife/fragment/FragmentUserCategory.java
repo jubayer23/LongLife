@@ -28,6 +28,7 @@ import com.creative.longlife.model.CategoryList;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -191,6 +192,7 @@ public class FragmentUserCategory extends Fragment implements View.OnClickListen
 
                         if (movies.getSuccess() == 1) {
                             categories.addAll(movies.getCategories());
+                            Collections.sort(categories, new Category.idOrderAscending());
                             userCategoryAdapter.notifyDataSetChanged();
                         }
 
